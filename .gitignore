@@ -1,0 +1,13 @@
+*.bak
+*.backup
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.spl
+*.pdf
+*.fdb_*
+*.fls
+*.synctex.gz
+.texpadtmp
