@@ -22,8 +22,11 @@
 \npdecimalsign{.} 
 \npthousandsep{,} 
 % \usepackage{stfloats} 
-             
-\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\usepackage{xspace}
+
+\newcommand{\Rascal}{\textsc{Rascal}}
+% \newcommand{\DCFlow}{\textsc{DCFlow}\xspace}
+\newcommand{\DeFacto}{\textsc{DeFacto}\xspace}
       
 % *** SUBFIGURE PACKAGES ***
 %\usepackage[tight,footnotesize]{subfigure}
@@ -304,6 +307,46 @@ Currently we have extractors of \mthree models for jar files (i.e. from
 bytecode) from the JRE and Eclipse plugins, and from the source code of
 Eclipse project separately.  We then link these independently acquired M3
 models to form complete models for further analysis.
+
+\section{Related Work}
+
+Lexical techniques use regular expression patterns to extract facts from
+program source code. These techniques are supported by tools such as Lex~\cite{Lex}
+and languages such as AWK~\cite{AWK79}, Perl, or Python. Murphy and
+Notkin~\cite{MurphyNotkin95,DBLP:journals/tosem/MurphyN96} extend the
+basic regular expression support provided by these tools and languages
+to include additional contextual information, allowing regular
+expressions to be given in a hierarchy where some expressions only match after
+other expressions have already matched (e.g., an expression matching a
+function call may require an expression matching a function definition to
+match first). Extracted facts can also be organized in relations, which can
+then allow additional facts to be computed once scanning is complete.
+
+Approaches based on grammars naturally handle the nested constructs common to
+programming languages, but, in contrast to lexical techniques, generally
+require the source code to be syntactically correct so it can be parsed.
+Parsing tools such as Yacc~\cite{Yacc} provide basic support for hand-coded
+fact extraction using the parser's semantic actions. A number of tools also
+exist with direct support for extracting facts from programs. One example is
+the Rigi system~\cite{Mueller88}, which provides fixed fact extractors for
+several languages and represents facts as tuples in the Rigi Standard Format
+(RSF). Other systems make use of attribute
+grammars~\cite{FNC2,Paakki95,EkmanHedin07,kiama,DBLP:journals/scp/WykBGK10},
+using synthesized attributes to specify facts and inherited attributes to
+propagate these through the parse tree.
+
+Relational approaches support extracting facts into relations which can then
+be combined and analyzed. Rigi relations are formed over RSF tuples and
+processed using operations in the Rigi Command Library (RCL).
+GROK~\cite{Holt96} and CrocoPat~\cite{BeyerEtAl03,beyer05efficient} (using a
+notation called RML) instead use relational algebra; GROK supports only binary
+relations, while CrocoPat supports n-ary relations. The \DeFacto
+system~\cite{DBLP:conf/sle/BastenK08}, using RScript~\cite{KlintRscript}, also
+supports n-ary relations and relational algebra, as does Vankov's work on
+formulating program slicing using relational techniques~\cite{Vankov05}.
+\Rascal~\cite{KvdSV-Rascal11,rascalscam} includes n-ary relations as a native
+datatype and relational operations (e.g., projection, transitive closure,
+products) as standard \Rascal expressions.
 
 \section{Conclusion}
 
