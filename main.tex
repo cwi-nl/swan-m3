@@ -128,65 +128,74 @@ In the context of the EU FP7 project ``OSSMETER'' we have developed an
 infrastructure for measuring source code. The goal of OSSMETER is to obtain
 insight into the quality of open-source projects from all possible perspectives,
 including product, process and
-community\footnote{\url{http://www.ossmeter.org}}.
+community.\!\footnote{\url{http://www.ossmeter.org}}
 
+% \textbf{NOTE: we have accuracy in here to distance ourselves from the srcML
+% approach, variability is a given and integration is here due to the Call for Papers}
 The challenges faced by our part of the design, which focuses on source code,
-are \emph{variability}, \emph{integration} and \emph{accuracy}:%\textbf{NOTE: we have accuracy in here to distance ourselves from the srcML approach, variability is a given and integration is here due to the Call for Papers}
-\begin{itemize}
-\item[Variability] is necessary to support the different languages, including
-dialects, we support, as well as the different metrics we will compute.
-\item[Integration] is necessary at a semantic level, where metrics are
-computed across programming language and domain boundaries, and are combined
-for further analysis.
-\item[Accuracy] is a prerequisite for insightful analyses. When accuracy is
-lost in the early stage of fact extraction from source code, the downstream
-analyses may show interesting but nevertheless meaningless information.
-\end{itemize}
-%
+are \emph{variability}, \emph{integration} and \emph{accuracy}. Variability is
+necessary to support the different languages, including dialects, we support,
+as well as the different metrics we will compute. Integration is necessary at
+a semantic level, where metrics are computed across programming language and
+domain boundaries, and are combined for further analysis. Accuracy is a
+prerequisite for insightful analyses. When accuracy is lost in the early stage
+of fact extraction from source code, the downstream analyses may show
+interesting but nevertheless meaningless information.
+
 The standard solution for variability and integration is to put an explicit
 reusable model (e.g., database, graph) in the center, such that model
 producers (parsers \& extractors) can be de-coupled from model consumers
 (metrics \& visuals). Examples of such intermediate models are
 FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{HWS00}, KDM~\cite{omg-kdm},
 and ATerms~\cite{BJKO00}. A positive side-effect of intermediate models
-is that the data is pushed into a general form, this also enables integrating
+is that the data are pushed into a general form, which enables integrating
 information from different sources. We have been inspired by these examples.
 
-This abstract is a brief description of \mthree, a set of code models, which should be easy to
-construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
+This paper is a brief description of \mthree, a set of code models which
+should be easy to construct, easy to extend to include language specifics, and
+easy to consume to produce metrics and other analyses.\!\footnote{An earlier,
+shorter version of this paper was presented at BENEVOL 2014 (no formal
+proceedings).} \mthree consists of an abstract syntax tree (AST) layer
+(hierarchical) and a relational (flat) layer. The AST layer uses a standard
+interface, but is expected to be language specific, while the relational layer
+is more abstract in nature and made for reuse.
 
-\emph{The main threat to validity of any intermediate model which is generic enough to be reusable between different programming languages is that accuracy may be lost. This is why the \mthree standard first prescribes precise language-specific AST models and then language agnostic relational models where it is possible to abstract.}
-The reader should be aware that we do \emph{not} intend to
-create a unified model for programming language semantics. Such a language
-independent model would be inaccurate (wrong), and deliver meaningless
-metrics. Instead we opt for a unified \emph{form} for storing facts about
-programs. This means that all models will have a predictable shape, but we do
-not assume any reusability of metrics or visuals producers between models
-produced by different parsers. The design of \mthree  gives accuracy a higher priority than reuse.
+\emph{The main threat to validity of any intermediate model which is generic
+enough to be reusable between different programming languages is that accuracy
+may be lost. This is why the \mthree standard first prescribes precise
+language-specific AST models and then language agnostic relational models
+where it is possible to abstract.} The reader should be aware that we do
+\emph{not} intend to create a unified model for programming language
+semantics. Such a language independent model would be inaccurate (wrong), and
+deliver meaningless metrics. Instead we opt for a unified \emph{form} for
+storing facts about programs. This means that all models will have a
+predictable shape, but we do not assume any reusability of metrics or
+visualizations between models that are produced by different parsers. The
+design of \mthree  gives accuracy a higher priority than reuse.
 
 \begin{figure}[t]
 	\resizebox{\columnwidth}{!}{\input{architecture}}
 \caption{An overview: from code to metrics and visuals via M3 models.}
 \end{figure}
 
-The context of \mthree\ is the Rascal meta-programming 
-language~\cite{KvdSV- Rascal11,rascalscam}.\footnote{\url{http://www.rascal-mpl.org}} 
-This is a
+The context of \mthree\ is the Rascal meta-programming language~\cite{KvdSV-
+Rascal11,rascalscam}.\footnote{\url{http://www.rascal-mpl.org}} This is a
 domain specific language specifically designed to include primitives we need
-to model any programming language syntax and semantics, and to analyze and
-manipulate these models. Three essential design elements for the purpose of
-this paper are that Rascal has value semantics for all in-memory data,
-including sets and relations, it has support for URI literals, called ``source
-locations'', and it has term rewriting and relational calculus primitives to
+to model the syntax and semantics of any programming language, and to analyze
+and manipulate these models. Three essential design elements related to this
+paper are that Rascal has value semantics for all in-memory data, including
+sets and relations; it has support for URI literals, called ``source
+locations''; and it has term rewriting and relational calculus primitives to
 deal with hierarchical and relational data, respectively. This includes
-generic traversal~\cite{scrap,travfuncs} and pattern matching primitives~\cite{?} as well as relational
-operators such as transitive closure and comprehensions~\cite{tarski}.
+generic traversals~\cite{Traversals} and pattern matching primitives as well
+as relational operators such as transitive closure and comprehensions.
 
-The differences between \mthree and the aforementioned related work is that it deals with purely \emph{immutable},
-typed, data which can be directly produced, manipulated and analyzed using
-Rascal primitives. Two unique elements are the introduction of URI literals to
-identify source code artifacts in a language agnostic manner and support for
-fully structured type symbols.
+The differences between \mthree and the aforementioned models is that \mthree
+deals with purely \emph{immutable}, typed data which can be directly
+produced, manipulated and analyzed using Rascal primitives. Two unique
+elements are the introduction of URI literals to identify source code
+artifacts in a language agnostic manner and support for fully structured type
+symbols.
 
 \section{Experience report}
 
