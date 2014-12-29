@@ -290,10 +290,10 @@ model by projecting the information for an arbitrary class: the Rascal command
 \texttt{m@inheritance[|class://myPrj/java/util/List|]} would produce all
 interfaces that inherit from \verb|java.util.List|.
 
-The query part of a URI is used to \emph{modify} identities, for example to
-scope them for a particular version of a system:
-\loc{class://myPrj/java/util/List?svn=4242}. The offset and length fields are
-used to identify consecutive slice of characters of the identified artifact.
+%The query part of a URI is used to \emph{modify} identities, for example to
+%scope them for a particular version of a system:
+%\loc{class://myPrj/java/util/List?svn=4242}. The offset and length fields are
+%used to identify consecutive slice of characters of the identified artifact.
 
 \mthree\ models are build on this concept of logical and physical source
 locations. It uses binary relations between locations, it annotates AST nodes
@@ -342,10 +342,10 @@ For example, if an abstract method from an
 interface is called we should not infer immediately all the call sites and add
 those to the invocations relation. Some metrics may want to count the fan-out
 to abstract methods, while other metrics want to know the impact on concrete
-implementations. You can compute this kind of information by composing basic
+implementations. You can compute such information by composing basic
 facts---e.g. ``\lstinline!invocation o overrides!'' gives all the concrete callees
 for calls to abstract methods---and then compute a metric over the resulting
-relation instead.
+relation.
 
 \subsection{Trees.} For abstract syntax trees we use a general concept of
 algebraic data-types in Rascal. Every language comes with its own definitions.
