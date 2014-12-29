@@ -26,13 +26,17 @@
 	\node (Translator) [process, right =2em of ASTStealing] { Translator };
 
 	\node (Extractor) [process, right = 2em of Translator] { Extractor };
-	\node (M3Relations) [box, above = of Extractor] { \mthree };
+
+	\node (M3RelationsOuter) [box, fill=white, above = of Extractor] { };
+	\node () [box, fill=white, above = of Extractor, xshift=-0.5mm, yshift=0.5mm] { };
+	\node (M3Relations) [box, fill=white, above = of Extractor, xshift=-1mm, yshift=1mm] { \mthree \mbox{\scriptsize (per file) } };
+	
 	\node (RascalASTOuter) [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, xshift=4mm,yshift=-2mm] {};
 	\node () [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, fill=white, xshift=2mm,yshift=-1mm] {};
 	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below =1.5em of Extractor,fill=white] {};
 	\node (RascalASTActual) [below=-2.3em of RascalAST, text width=4em, text centered] { Rascal AST };
 
-	\node (Linker) [process, right = 5em of M3Relations] { Linker };
+	\node (Linker) [process, right = 5em of M3RelationsOuter] { Linker };
 	\node (M3Total) [box, below = of  Linker] { Merged \mthree } ;
 	\node (Result) [widebox, below =3.2em of  M3Total] { Metrics and visualisation };
 
@@ -42,10 +46,10 @@
 	\path [line] (Translator) -- (M3Relations);
 	\path [line] (Translator) -- (RascalAST);
 	\path [line] (RascalAST) -- (Extractor);
-	\path [line] (Extractor) -- (M3Relations);
+	\path [line] (Extractor) -- (M3RelationsOuter);
 
-	\path [line] (M3Relations) -- (Linker);
-	\path [line] (M3Relations) -- (Result);
+	\path [line] (M3RelationsOuter) -- (Linker);
+	\path [line] (M3RelationsOuter) -- (Result);
 
 	\path [line] (Linker) -- (M3Total);
 	\path [line] (M3Total) -- (Result);
