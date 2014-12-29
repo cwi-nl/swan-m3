@@ -181,20 +181,18 @@ fully structured type symbols.
 
 \section{Experience report}
 
-We developed \mthree to satisfy the requirements of the OSSMETER project, but we have been using it for a broader range of software analytics related studies.
+We developed \mthree to satisfy the requirements of the OSSMETER project, but we have been using it for a broader range of software analytics related studies. 
 
-We have used \mthree to construct comparable models of Android API evolution from three sources\footnote{The students of the honors track for the Software Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}: source code, jar files and online documentation. Creating the same model out the three sources required writing three different fact extractors. The first is based on the Eclipse JDT, the second uses ASM~\footnote{asm} and the last uses Rascal's HTML library model. The analysis reveals interesting differences between the models which may influence the conclusions of related work~\cite{apianalysis}. For example, it seems that Android jars are released containing much undocumented API which can be (and is) used by clients, and which is not included in the source releases even.
+We have used \mthree to construct comparable models of Android API evolution from three sources\footnote{The students of the honors track for the Software Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}: source code, jar files and online documentation. Creating the same model out the three sources required writing three different fact extractors. The first is based on the Eclipse JDT, the second uses ASM~\footnote{\url{http://asm.ow2.org/}} and the last uses Rascal's HTML library model. The analysis reveals interesting differences between the models which may influence the conclusions of related work~\cite{apianalysis}. For example, it seems that Android jars are released containing much undocumented API which can be (and is) used by clients, and which is not included in the source releases even.
 
-We have used \mthree to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
+For OSSMETER, \mthree is applied to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
 
-We are using \mthree to improve our PHP static analysis framework called PHP AiR~\cite{phpair}, supporting over-approximations of dynamic features such as ``includes'' and ``types''. 
+We are using \mthree to improve our PHP static analysis framework called PHP AiR~\cite{phpair}, supporting over-approximations of dynamic features such as ``includes'' and ``types''~\cite{ase2014}. 
 
 We have used \mthree to analyze a large body of Java source code, comparing the cyclomatic complexity of methods to their size, refuting earlier scientific results reporting on a strong linear model between the two dimensions~\cite{davy}.
 
 Finally a number of Universiteit van Amsterdam masters theses are based on using \mthree for PHP refactoring, PHP security analysis, quality metrics
 Java refactoring in a concurrency context, and Java reverse engineering.
-
-\textbf{TODO: add more, cite more (masters theses)}
 
 \section{Design aspects}
 
