@@ -260,11 +260,24 @@ as types) to link back to source code whenever possible.
 \subsection{Relations.} The \mthree\  model is both layered and compositional.
 This means that \mthree\ models can be combined (``linked'') and that they can
 be extended (``annotated''). The core relations are all between code
-locations: \emph{containment} defines which artifact is (logically) contained
-in which other artifact, \emph{declarations} define which logical locations
-are located at which physical locations, \emph{uses} defines which logical
-locations are used by which other logical locations. An example containment
+locations (see Table~\ref{table:core}). An example containment
 tuple would be \loc{<|class:///foo/Bar|,|pkg:///foo|>}.
+
+\begin{table}[t]
+\begin{tabularx}{\columnwidth}{|l|l|X|}\hline
+  & \lstinline{rel[loc, loc]} & Description \\\hline 
+\textbf{generic} & \lstinline{containment} & logical containment of 
+code entities \\
+ & \lstinline{declarations} & maps logical \lstinline{loc} to physical \lstinline{loc} \\
+& \lstinline{uses} & maps physical \lstinline{loc} to logical \lstinline{loc} \\\hline
+ \textbf{OO} & \lstinline{extends} & who extends who \\
+ & \lstinline{implements} & who implements who \\
+ & \lstinline{methodInvocation} & who invokes who \\
+ & \lstinline{methodOverrides}  & who overrides who \\
+& \lstinline{fieldAccess} & who accesses who \\\hline
+\end{tabularx}
+\caption{Core binary relations of \mthree \label{table:core}}\vspace{-9mm}
+\end{table}
 
 This core model is language independent, facilitating not only, volume
 metrics, browsing visuals (drill-down) and generic aggregation over
