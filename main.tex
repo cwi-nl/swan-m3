@@ -425,7 +425,7 @@ Listing~\ref{code:coverage} shows a concrete example of an \mthree analysis in R
 
 The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} (set difference) and postfix \lstinline{+} (transitive closure) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision. 
 
-This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
+%This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
 
 \begin{figure}[t]
 \begin{lstlisting}[caption=Statically estimating test coverage using \mthree., label=code:coverage,language=rascal]
