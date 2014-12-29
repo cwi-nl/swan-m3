@@ -331,18 +331,19 @@ formal languages like grammars, schema languages, or even pictorial languages.
 
 For modeling language specific information we annotate the above core model
 with extra relations. Again these are binary relations between logical
-locations. Examples for Java are \emph{inheritance}, \emph{overrides}, and
-\emph{invocations}. These relations model key aspects of the static semantics
+locations (Table~\ref{table:core}). These relations model key aspects of the static semantics
 of a programming language. Note that we never refer to instantiated or dynamic
 objects here, not even parametric type instantiations. All relations refer to
-source locations literally. For the accuracy of source code metrics, it is
+source locations literally. 
+%For the accuracy of source code metrics, it is
 essential that \mthree\  separates what is written in the source code from
-what the code means dynamically. For example, if an abstract method from an
+what the code means dynamically. 
+For example, if an abstract method from an
 interface is called we should not infer immediately all the call sites and add
 those to the invocations relation. Some metrics may want to count the fan-out
 to abstract methods, while other metrics want to know the impact on concrete
 implementations. You can compute this kind of information by composing basic
-facts---e.g. ``invocation $\circ$ overrides'' gives all the concrete callees
+facts---e.g. ``\lstinline!invocation o overrides!'' gives all the concrete callees
 for calls to abstract methods---and then compute a metric over the resulting
 relation instead.
 
@@ -367,9 +368,11 @@ below).
 %
 Trees are useful mostly for the computation of metrics over code units that
 contain statements, such as cyclomatic complexity, but also to infer data and
-control flow information for use in the more advanced analyses. Trees are also
-expensive to keep in memory, so in M3 models they are always computed \emph
-{on-demand} for a particular logical location.
+control flow information for use in the more advanced analyses. 
+
+%Trees are also
+%expensive to keep in memory, so in M3 models they are always computed \emph
+%{on-demand} for a particular logical location.
 
 \subsection{Types} For types we introduce a single sort called
 \texttt{TypeSymbol}. We use this to represent any kind of abstract value that
@@ -431,8 +434,7 @@ time efficiency.
 On the other hand we are investing in low level optimizations for in-memory
 hierarchical data-structures~\cite{BJKO00,gpce}. These results are hopeful,
 making it feasible to scale to even larger analyses without sacrificing
-immutability. We are also planning to benefit from scaling out in parallel,
-which is facilitated by the immutability of \mthree models.
+immutability. Also scaling out in parallel will be facilitated by the immutability of \mthree.
 
 \section{Example}
 
@@ -516,7 +518,7 @@ family of metamodels. Finally, we recommend reading about source code query mech
 
 We have shown you a taste of \mthree, an extensible and composable model for
 source code artifacts based on relations and trees, with immutable value
-semantics, source location literals and extensible with annotations. It has
+semantics, source location literals and extensible with new types of binary relations. It has
 support for basic language independent analyses and we have a detailed model
 for Java and PHP. \mthree is designed for variability, integration and accuracy, all required for software analytics research with a source code component.
 
