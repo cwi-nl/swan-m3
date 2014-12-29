@@ -154,8 +154,7 @@ information from different sources. We have been inspired by these examples.
 This paper is a brief description of \mthree, a set of code models which
 should be easy to construct, easy to extend to include language specifics, and
 easy to consume to produce metrics and other analyses.\!\footnote{An earlier,
-shorter version of this paper was presented at BENEVOL 2014 (no formal
-proceedings).} \mthree consists of an abstract syntax tree (AST) layer
+shorter version of this paper was presented at BENEVOL 2014.} \mthree consists of an abstract syntax tree (AST) layer
 (hierarchical) and a relational (flat) layer. The AST layer uses a standard
 interface, but is expected to be language specific, while the relational layer
 is more abstract in nature and made for reuse.
@@ -170,7 +169,7 @@ semantics. Such a language independent model would be inaccurate (wrong), and
 deliver meaningless metrics. Instead we opt for a unified \emph{form} for
 storing facts about programs. This means that all models will have a
 predictable shape, but we do not assume any reusability of metrics or
-visualizations between models that are produced by different parsers. The
+visualizations between models that are produced by different front-ends. The
 design of \mthree  gives accuracy a higher priority than reuse.
 
 \begin{figure}[t]
@@ -318,7 +317,7 @@ code entities \\
 & \lstinline!methodOverrides! & who overrides who \\
 & \lstinline!fieldAccess! & who accesses who \\ \hline
 \end{tabularx}
-\caption{Binary relations of \mthree \label{table:core}}\vspace{-9mm}
+\caption{Core Binary relations of \mthree \label{table:core}}\vspace{-9mm}
 \end{table}
 
 This core model is language independent, facilitating not only volume metrics,
@@ -439,7 +438,7 @@ Listing~\ref{code:coverage} shows a concrete example of an \mthree analysis in R
 
 The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} (set difference) and postfix \lstinline{+} (transitive closure) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision. 
 
-This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
+%This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
 
 \begin{figure}[t]
 \begin{lstlisting}[caption=Statically estimating test coverage using \mthree., label=code:coverage,language=rascal]
