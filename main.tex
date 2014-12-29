@@ -21,10 +21,31 @@
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{numprint}
+\usepackage{xcolor}
 \npdecimalsign{.} 
 \npthousandsep{,} 
 % \usepackage{stfloats} 
 \usepackage{xspace}
+
+\usepackage{listings}
+\usepackage{rascallst}
+\lstset{language=rascal,
+showspaces=false,
+showtabs=false,
+breaklines=true,
+morekeywords={pointcut,execution,cflowbelow, cflow, percflow, aspect, otherwise},
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+basicstyle=\ttfamily\small, % maybe also \small or \footnotesize
+%frame=TB,
+numbers=left,
+numberstyle=\tiny\color{gray},
+tabsize=3,
+captionpos=b,
+columns=flexible,
+}
+
 
 \newcommand{\Rascal}{\textsc{Rascal}}
 % \newcommand{\DCFlow}{\textsc{DCFlow}\xspace}
@@ -108,7 +129,8 @@ structure for measuring source code. The goal of OSSMETER is to obtain insight
 in the quality of open-source projects from all possible perspectives, including product, process and community\footnote{\url{http://www.ossmeter.org}}. 
 
 The three challenges that our part of the design, which focuses on source code, faced
-are \emph{variability}, \emph{integration} and \emph{accuracy} \textbf{NOTE: we have accuracy in here to distance ourselves from the srcML approach, variability is a given and integration is here due to the Call for Papers}:
+are \emph{variability}, \emph{integration} and \emph{accuracy}:
+%\textbf{NOTE: we have accuracy in here to distance ourselves from the srcML approach, variability is a given and integration is here due to the Call for Papers}
 \begin{itemize}
 \item[Variability] is necessary to support the different languages and their dialects we support, as well as the different metrics we will compute.
 \item[Integration] is necessary at a semantic level, where metrics are computed across programming language and domain boundaries, and are combined for further analysis.
@@ -119,6 +141,7 @@ The standard solution for variability and integration is to put an explicit reus
 (database, graph) in between such that model producers (parsers \& extractors)
 can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{GXL}, and KDM~\cite{omg-kdm}, ATerms~\cite{BJKO00} and
 S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is that the data is pushed into a general form, this also enables integrating information from different sources. We have been inspired by these examples.
+
 
 This abstract is a brief description of \mthree, a set of code models, which should be easy to
 construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
@@ -164,7 +187,7 @@ We have used \mthree to construct comparable models of Android API evolution fro
 
 We have used \mthree to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
 
-We are using \mthree to build a PHP static analysis framework, supporting over-approximations of dynamic features such as ``includes'' and ``types''. 
+We are using \mthree to improve our PHP static analysis framework called PHP AiR~\cite{phpair}, supporting over-approximations of dynamic features such as ``includes'' and ``types''. 
 
 We have used \mthree to analyze a large body of Java source code, comparing the cyclomatic complexity of methods to their size, refuting earlier scientific results reporting on a strong linear model between the two dimensions~\cite{davy}.
 
@@ -344,7 +367,28 @@ On the other hand we are investing in low level optimizations for in-memory hier
 
 \section{Example}
 
-\textbf{TODO: a short Rascal code example doing some analytics here?}
+Listing~\ref{code:coverage} shows a concrete example of an \mthree analysis in Rascal. This top level function, \lstinline{estimateCoverage}, analyses any M3 model produced for the Java language produces a percentage over-estimating a system's test coverage  (given a JUnit4 test harness). 
+
+The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} (set difference) and postfix \lstinline{+} (transitive closure) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision.
+
+\begin{figure}[t]
+\begin{lstlisting}[caption=Statically estimating test coverage using \mthree., label=code:coverage,language=rascal]
+real estimateCoverage(M3 m) {
+  allCalls = m@methodInvocations + implicitCalls(m);
+  allCalls += allCalls o m@methodOverrides<to,from>;
+  testMethods = jUnit4TestMethods(m);
+  ifaceMethods 
+    = {m | <t, m> <- m@containment, isMethod(m), isInterface(t)};
+  
+  reachable = {m | m <- reach(allCalls, testMethods), m in methods(m)} - allTestMethods - interfaceMethods;
+  total = methods(m) - testMethods - ifaceMethods;
+  
+  return percentage(
+    size(reachable), 
+    size(total), precision=0.01);
+}
+\end{lstlisting}
+\end{figure}
 
 \section{Related Work}
 

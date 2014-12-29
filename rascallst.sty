@@ -1,0 +1,48 @@
+
+\ProvidesPackage{rascallst}
+\RequirePackage{listings}
+\RequirePackage{xspace}
+
+\lstdefinelanguage{rascal}{%
+% numbers=left,%
+ morekeywords={try,value,catch,module,when,solve,with,import,alias,str,if,loc,else,switch,visit,case,default,break,throw,int,real,bag,data,rule,for,bool,insert,public,return,private,void,map,:,<,>,@,(,),=,:=,==,.,+=,-=,*=,/=,~=,rel,list,set,tuple,[,],anno},
+ sensitive=true,%
+ morecomment=[l]{//},%
+ morestring=[b]",%
+ commentstyle=\footnotesize\ttfamily\itshape,%
+ keywordstyle=\bfseries,%
+ basicstyle=\footnotesize\ttfamily,%
+ showstringspaces=false,%
+% columns=flexible,%
+ escapeinside={(*@}{@*)},%
+ literate={<-}{{\,$\leftarrow$}\,}1 {=>}{{\,$\Rightarrow$}\,}1 {:}{\textbf{:}}1,%
+}
+
+\lstdefinelanguage{rascalnocase}{%
+% numbers=left,%
+ morekeywords={try,value,catch,module,when,solve,with,import,alias,str,if,else,visit,break,throw,int,real,bag,data,rule,for,bool,insert,public,return,private,void,map,:,<,>,(,),=,:=,==,.,+=,-=,*=,/=,~=,rel,list,set,tuple,[,]},
+ sensitive=true,%
+ morecomment=[l]{//},%
+ morestring=[b]",%
+ commentstyle=\footnotesize\ttfamily\itshape,%
+ keywordstyle=\bfseries,%
+ basicstyle=\footnotesize\ttfamily,%
+ showstringspaces=false,%
+% columns=flexible,%
+ escapeinside={(*@}{@*)},%
+ literate={<-}{{\,$\leftarrow$}\,}1 {=>}{{\,$\Rightarrow$}\,}1 {:}{\textbf{:}}1,%
+}
+
+%{&&}{\,$\wedge$\,}1 {||}{\,$\vee$\,}1
+
+
+\newcommand{\keyword}[1]{\textbf{\textrm{#1}}\xspace}
+
+
+\newcommand{\rascal}[1]{\lstinline[language=rascal]{#1}}
+\newcommand{\rsnippet}[1]{\textrm{\small #1}}
+\newcommand{\code}[1]{\rsnippet{#1}}
+
+\lstset{%
+  language=rascal% 
+}
