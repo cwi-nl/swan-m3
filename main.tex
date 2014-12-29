@@ -79,7 +79,7 @@
 
 \begin{document}
 
-\title{{\huge $M^3$: An Open Model for Source Code Analytics in Rascal}}
+\title{{\huge $M^3$: A General Model for Source Code Analytics in Rascal}}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
@@ -101,13 +101,14 @@
 
 In the context of the EU FP7 project ``OSSMETER'' we have developed an infra-
 structure for measuring source code. The goal of OSSMETER is to obtain insight
-in the quality of open-source projects from all possible perspectives, including product, process and community. 
+in the quality of open-source projects from all possible perspectives, including product, process and community\footnote{\url{http://www.ossmeter.org}}. 
 
-The main two challenges that our part of the design, which focuses on source code, faces
+The threeo challenges that our part of the design, which focuses on source code, faced
 are \emph{variability} and \emph{integration}: 
 \begin{itemize}
 \item[Variability] is necessary to support the different languages and their dialects we support, as well as the different metrics we will compute.
 \item[Integration] is necessary at a semantic level, where metrics are computed across programming language and domain boundaries, and are combined for further analysis.
+\item[Accuracy] is a prerequisite for insightful analyses. When accuracy is lost in the early stage of fact extraction from source code, the downstream analyses may show interesting but nevertheless meaningless information.
 \end{itemize}
 %
 The standard solution for variability and integration is to put an explicit reusable model
@@ -118,7 +119,7 @@ S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is tha
 This abstract is a brief description of \mthree\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}, a set of code models, which should be easy to
 construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
 
-\emph{The main threat to validity of any intermediate model which is generic enough to be reusable between different programming languages is that important details may be lost. This is why the \mthree standard prescribes language specific AST models and language agnostic relational models where possible.}
+\emph{The main threat to validity of any intermediate model which is generic enough to be reusable between different programming languages is that accuracy may be lost. This is why the \mthree standard first prescribes precise language-specific AST models and then language agnostic relational models where it is possible to abstract.}
 The reader should be aware that we do \emph{not} intend to
 create a unified model for programming language semantics. Such a language
 independent model would be inaccurate (wrong), and deliver meaningless
@@ -327,6 +328,11 @@ bytecode) from the JRE and Eclipse plugins, and from the source code of
 Eclipse project separately.  We then link these independently acquired M3
 models to form complete models for further analysis.
 
+\subsection{Efficiency and Memory Consumption}
+
+\textbf{TODO} explain caveat.
+\textbf{TODO} add (future) work on hash trie optimization, Rascal compiler etc. 
+
 \section{Related Work}
 
 Lexical techniques use regular expression patterns to extract facts from
@@ -367,13 +373,17 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 % datatype and relational operations (e.g., projection, transitive closure,
 % products) as standard \Rascal expressions.
 
+\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM}
+
 \section{Conclusion}
 
 We have shown you a taste of \mthree, an extensible and composable model for
 source code artifacts based on relations and trees, with immutable value
 semantics, source location literals and extensible with annotations. It has
 support for basic language independent analyses and we have a detailed model
-for Java and PHP. 
+for Java and PHP. \mthree is designed for variability, integration and accuracy. 
+
+The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
