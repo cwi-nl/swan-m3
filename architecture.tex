@@ -29,14 +29,14 @@
 
 	\node (Extractor) [process, right = 2em of Translator] { Extractor };
 
-	\node (M3RelationsOuter) [box, fill=white, above = of Extractor] { };
-	\node () [box, fill=white, above = of Extractor, xshift=-0.5mm, yshift=0.5mm] { };
-	\node (M3Relations) [box, fill=white, above = of Extractor, xshift=-1mm, yshift=1mm] { \mthree \mbox{\scriptsize (per file) } };
+	\node (M3RelationsOuter) [widebox, fill=white, above = of Extractor] { };
+	\node () [widebox, fill=white, above = of Extractor, xshift=-0.5mm, yshift=0.5mm] { };
+	\node (M3Relations) [widebox, fill=white, above = of Extractor, xshift=-1mm, yshift=1mm] { \mbox{\mthree relations} \mbox{\scriptsize (per file) } };
 	
 	\node (RascalASTOuter) [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, xshift=3mm,yshift=-1.5mm] {};
 	\node () [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, fill=white, xshift=1.5mm,yshift=-0.75mm] {};
 	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below =1.5em of Extractor,fill=white] {};
-	\node (RascalASTActual) [below=-2.4em of RascalAST, text width=4em, text centered] { Rascal AST };
+	\node (RascalASTActual) [below=-2.4em of RascalAST, text width=4em, text centered] { \mthree \\\mbox{AST} };
 
 	\node (Linker) [process, right = 5em of M3RelationsOuter] { Linker };
 	\node (M3Total) [box, below = of  Linker] { Merged \mthree } ;
