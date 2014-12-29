@@ -3,6 +3,9 @@
 \tikzstyle{line} = [draw, shorten >= 0.1em, -latex, semithick]
 \tikzstyle{aline} = [draw, dashed, shorten >= 0.1em, -latex, semithick]
 \tikzstyle{box} = [rectangle, draw, text width=4em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{widebox} = [rectangle, draw, text width=6.5em, text centered, rounded corners, minimum height=3em]
+
+\tikzstyle{process} = [ellipse, draw, text width=4em, text centered, minimum height=3em]
 \tikzstyle{triangle} = [isosceles triangle, shape border rotate=90,isosceles triangle stretches=true, anchor=south, draw]
 \begin{tikzpicture}[node distance=2.5em]
 	\node (Input) [box] { \footnotesize \texttt{|project://rascal|} };
@@ -10,22 +13,28 @@
 		\begin{tikzpicture}[node distance=2em, solid]
 			\small
 			\node (Caption) [font=\fontsize{6}{6}\color{black!70}] { Reuse AST };
-			\node (Compiler) [box, below= of Caption, yshift=1.5em] { Parser / Compiler };
-			\node (InternalAST) [triangle, minimum height=4em, minimum width=6em, below= of Compiler] { };
+			\node (Compiler) [process, below= of Caption, yshift=1.5em] { Parser / Compiler };
+
+			\node () [triangle, minimum height=4em, minimum width=6em, below = of Compiler, fill=white, xshift=2mm,yshift=-2mm] {};
+			\node (InternalASTFakeMiddle) [triangle, minimum height=4em, minimum width=6em, below = of Compiler, fill=white, yshift=-1mm] {};
+			\node (InternalAST) [triangle, minimum height=4em, minimum width=6em, below= of Compiler, xshift=-2mm, fill=white] { };
 			\node (InternalASTActual) [below=-2.3em of InternalAST, text width=4em, text centered] { Internal AST };
-			\path [line] (Compiler) -- (InternalAST);
+			\path [line] (Compiler) -- (InternalASTFakeMiddle);
 		\end{tikzpicture}
 	};
 
-	\node (Translator) [box, right = of ASTStealing] { Translator };
+	\node (Translator) [process, right =2em of ASTStealing] { Translator };
 
-	\node (Extractor) [box, right = of Translator] { Extractor };
+	\node (Extractor) [process, right = 2em of Translator] { Extractor };
 	\node (M3Relations) [box, above = of Extractor] { \mthree };
-	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below = of Extractor] {};
+	\node (RascalASTOuter) [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, xshift=4mm,yshift=-2mm] {};
+	\node () [triangle, minimum height=4em, minimum width=6em, below = 1.5em of Extractor, fill=white, xshift=2mm,yshift=-1mm] {};
+	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below =1.5em of Extractor,fill=white] {};
+	\node (RascalASTActual) [below=-2.3em of RascalAST, text width=4em, text centered] { Rascal AST };
 
-	\node (Linker) [box, right = of M3Relations] { linker };
+	\node (Linker) [process, right = 5em of M3Relations] { Linker };
 	\node (M3Total) [box, below = of  Linker] { Merged \mthree } ;
-	\node (Result) [box, below = of  M3Total] { Metrics and visualisation };
+	\node (Result) [widebox, below =3.2em of  M3Total] { Metrics and visualisation };
 
 	\path [line] (Input) -- (ASTStealing);
 	\path [line] (ASTStealing) -- (Translator);
@@ -40,4 +49,5 @@
 
 	\path [line] (Linker) -- (M3Total);
 	\path [line] (M3Total) -- (Result);
+	\path [line] (RascalASTOuter) -- (Result);
 \end{tikzpicture}
