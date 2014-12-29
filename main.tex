@@ -460,12 +460,12 @@ real estimateCoverage(M3 m) {
   allCalls = m@methodInvocations + implicitCalls(m);
   allCalls += allCalls o m@methodOverrides<to,from>;
   testMethods = jUnit4TestMethods(m);
-  ifaceMethods = {m | <t, m> <- m@containment, isMethod(m), isInterface(t)};  
-  reachable = {m | m <- reach(allCalls, testMethods), m in methods(m)} - allTestMethods - interfaceMethods;
+  ifaceMethods = {met | <t, met> <- m@containment, isMethod(met), isInterface(t)};  
+  reachable = {met | met <- reach(allCalls, testMethods), met in methods(m)} - allTestMethods - interfaceMethods;
   total = methods(m) - testMethods - ifaceMethods;
-  return percentage(size(reachable), size(total), precision=0.01);
-}
+  return percentage(size(reachable), size(total), precision=0.01);       }
 \end{lstlisting}
+\vspace{-8mm}
 \end{figure}
 
 \section{Related Work}
