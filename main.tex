@@ -376,7 +376,7 @@ In essence a loaded \mthree model is an in-memory database of source code artifa
 
 Since \mthree and Rascal are implemented on the JVM we are using ``soft references'' to store \mthree models, such that we can re-compute caches which have been garbage collected. Especially the fused M3 model and AST models for specific files often drop out of memory because of this, releasing necessary space. Soft references mitigate memory limitations nicely at the cost of run-time efficiency.
 
-On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{aterms,gpce,ecoop}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
+On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{BJKO00,gpce,ecoop}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
 
 \section{Example}
 
@@ -423,7 +423,7 @@ fact extraction using the parser's semantic actions. A number of tools also
 exist with direct support for extracting facts from programs. Examples are
 the Rigi system~\cite{Mueller88}, which provides fixed fact extractors for
 several languages and represents facts as tuples in the Rigi Standard Format
-(RSF). Meta programming languages, such as Stratego~\cite{stratego}, TXL~\cite{txl} and ASF+SDF~\cite{asfsdf} provide integrated parsing and tree processing support for source code fact extraction and manipulation in any programming language. SrcML~\cite{srcml} generates XML-annotated source code for the C language which can be queried directly using XML processors. Other more general, like JastAdd, Silver and Kiama, make use of attribute
+(RSF). Meta programming languages, such as Stratego~\cite{stratego}, TXL~\cite{TXL06} and ASF+SDF~\cite{asfsdf} provide integrated parsing and tree processing support for source code fact extraction and manipulation in any programming language. SrcML~\cite{srcml} generates XML-annotated source code for the C language which can be queried directly using XML processors. Other more general, like JastAdd, Silver and Kiama, make use of attribute
 grammars~\cite{FNC2,Paakki95,EkmanHedin07,kiama,DBLP:journals/scp/WykBGK10},
 using synthesized attributes to specify facts and inherited attributes to
 propagate these facts through the parse tree.
