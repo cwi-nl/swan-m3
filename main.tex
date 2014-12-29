@@ -1,6 +1,6 @@
 \documentclass[conference]{IEEEtran}
 
-\usepackage{xspace}
+%\usepackage{xspace}
 \usepackage{ifpdf}
 \usepackage{diagbox}
 \usepackage{cite}
@@ -117,7 +117,7 @@ are \emph{variability}, \emph{integration} and \emph{accuracy} \textbf{NOTE: we 
 %
 The standard solution for variability and integration is to put an explicit reusable model
 (database, graph) in between such that model producers (parsers \& extractors)
-can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{rsf}, GXL~\cite{GXL}, and KDM~\cite{KDM}, ATerms~\cite{BJKO00} and
+can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{GXL}, and KDM~\cite{omg-kdm}, ATerms~\cite{BJKO00} and
 S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is that the data is pushed into a general form, this also enables integrating information from different sources. We have been inspired by these examples.
 
 This abstract is a brief description of \mthree, a set of code models, which should be easy to
@@ -388,10 +388,15 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 
 \textbf{TODO: add about MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc., also cite logic systems (from belgium)}
 
-MoDisco~\cite{DBLP:journals/infsof/BruneliereCDM14,DBLP:conf/kbse/BruneliereCJM10} 
-and the Knowledge Discovery Metamodel~\cite{omg-kdm}.
-
-Moose~\cite{DBLP:conf/sigsoft/NierstraszDG05,DBLP:journals/sigsoft/Nierstrasz12}, which extracts models of software systems defined based on the FAMIX family of meta-models.
+Model-based approaches extract facts into models, representing abstractions of
+the systems being analyzed. MoDisco~\cite{DBLP:journals/infsof/BruneliereCDM14,DBLP:conf/kbse/BruneliereCJM10},
+a model-based tool for modernizing legacy
+systems, supports extracting information about these systems into models
+defined using the Knowledge Discovery Metamodel~\cite{omg-kdm}, an OMG
+standard for modeling the structure and behavior of software systems. 
+Moose~\cite{DBLP:conf/sigsoft/NierstraszDG05,DBLP:journals/sigsoft/Nierstrasz12}
+extracts facts about software systems into models defined using the FAMIX
+family of metamodels.
 
 \section{Conclusion}
 
