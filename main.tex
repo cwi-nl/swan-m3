@@ -1,4 +1,6 @@
 \documentclass[conference]{IEEEtran}
+
+\usepackage{xspace}
 \usepackage{ifpdf}
 \usepackage{diagbox}
 \usepackage{cite}
@@ -72,43 +74,58 @@
 %% REMOVE PAGE NUMBERS!
 \pagestyle{plain}
 
-\newcommand{\loc}[1]{\small{\texttt{#1}}}
-\newcommand{\mthree}{\ensuremath{M^3}}
+\newcommand{\loc}[1]{\small{\texttt{#1}}\xspace}
+\newcommand{\mthree}{\ensuremath{M^3}\xspace}
 
 \begin{document}
 
-\title{{\huge $M^3$: An Open Model for Measuring Code Artifacts}}
+\title{{\huge $M^3$: An Open Model for Source Code Analytics in Rascal}}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
 % TODO: Other authors?
-%\author{ Anastasia Izmaylova, Paul Klint, Ashim Shahi and Jurgen Vinju}
+%\author{ Anastasia Izmaylova, Paul Klint, Ashim Shahi and Jurgen Vinju, Davy, Michael}
 \author{
 \IEEEauthorblockN{Mark Hills\IEEEauthorrefmark{1}}
 \IEEEauthorblockA{\IEEEauthorrefmark{1}East Carolina University, Greenville, NC, USA\\mhills@cs.ecu.edu}
 \and
-\IEEEauthorblockN{Paul Klint and Jurgen Vinju\IEEEauthorrefmark{2}}
-\IEEEauthorblockA{\IEEEauthorrefmark{2}Centrum Wiskunde \& Informatica, Amsterdam, The Netherlands\\\{Paul.Klint,Jurgen.Vinju\}@cwi.nl}
+\IEEEauthorblockN{Paul Klint, Davy Landman, Michael Steindorfer}
+\IEEEauthorblockN{Ashim Shahi, Jurgen Vinju\IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}Centrum Wiskunde \& Informatica, Amsterdam, The Netherlands\\\{Paul.Klint,Davy.Landman,Michael.Steindorfer,\\Ashim.Shahi,Jurgen.Vinju\}@cwi.nl}
 }
 
 \maketitle
 
 \section{Motivation}
 
-In the context of the EU FP7 project ``OSSMETER'' we are developing an infra-
+In the context of the EU FP7 project ``OSSMETER'' we have developed an infra-
 structure for measuring source code. The goal of OSSMETER is to obtain insight
-in the quality of open-source projects from all possible perspectives,
-including product, process and community.
+in the quality of open-source projects from all possible perspectives, including product, process and community. 
 
-The main challenge that our part of the design, which focuses on code, faces
-is variability: the different languages we support as well as the different
-metrics we will compute. The standard solution is to put an explicit model
+The main two challenges that our part of the design, which focuses on source code, faces
+are \emph{variability} and \emph{integration}: 
+\begin{itemize}
+\item[Variability] is necessary to support the different languages and their dialects we support, as well as the different metrics we will compute.
+\item[Integration] is necessary at a semantic level, where metrics are computed across programming language and domain boundaries, and are combined for further analysis.
+\end{itemize}
+%
+The standard solution for variability and integration is to put an explicit reusable model
 (database, graph) in between such that model producers (parsers \& extractors)
-can be de-coupled from model consumers (metrics \& visuals). This abstract is
-a ``white paper'' on \mthree, a set of code models, which should be easy to
-construct, easy to extend to include language specifics and easy to consume to
-produce metrics and other analyses. We solicit feedback on its usability.
+can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{rsf}, GXL~\cite{GXL}, and KDM~\cite{KDM}, ATerms~\cite{aterms} and
+S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is that the data is pushed into a general form, this also enables integrating information from different sources. We have been inspired by these examples.
+
+This abstract is a brief description of \mthree\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}, a set of code models, which should be easy to
+construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
+
+\emph{The main threat to validity of any intermediate model which is generic enough to be reusable between different programming languages is that important details may be lost. This is why the \mthree standard prescribes language specific AST models and language agnostic relational models where possible.}
+The reader should be aware that we do \emph{not} intend to
+create a unified model for programming language semantics. Such a language
+independent model would be inaccurate (wrong), and deliver meaningless
+metrics. Instead we opt for a unified \emph{form} for storing facts about
+programs. This means that all models will have a predictable shape, but we do
+not assume any reusability of metrics or visuals producers between models
+produced by different parsers. The design of \mthree  emphasizes variability and integration and reuse has a lower priority.
 
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{m3}
@@ -128,21 +145,23 @@ deal with hierarchical and relational data, respectively. This includes
 generic traversal and pattern matching primitives as well as relational
 operators such as transitive closure and comprehensions.
 
-Caveat emptor. The reader should be aware that we do \emph{not} intend to
-create a unified model for programming language semantics. Such a language
-independent model would be inaccurate (wrong), and deliver meaningless
-metrics. Instead we opt for a unified \emph{form} for storing facts about
-programs. This means that all models will have a predictable shape, but we do
-not assume any reusability of metrics or visuals producers between models
-produced by different parsers.
-
-\mthree\ is inspired by models such as FAMIX, RSF, GXL, ATerms and
-S-Expressions. The differences are that \mthree\ deals with purely immutable,
-typed, data and can be directly produced, manipulated and analyzed using
+The differences between \mthree and the aforementioned related work is that it deals with purely immutable,
+typed, data and which be directly produced, manipulated and analyzed using
 Rascal primitives. Two unique elements are the introduction of URI literals to
 identify source code artifacts in a language agnostic manner and support for
-fully structured type symbols. Otherwise \mthree\  is very similar in intent
-and solution patterns to the aforementioned existing models.
+fully structured type symbols.
+
+\section{Experience report}
+
+We developed \mthree to satisfy the requirements of the OSSMETER project, but we have been using it for a broader range of software analytics related studies.
+
+We have used \mthree to construct comparable models of Android API evolution from three sources\footnote{The students of the honors track for the Software Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}: source code, jar files and online documentation. Creating the same model out the three sources required writing three different fact extractors. The first is based on the Eclipse JDT, the second uses ASM~\footnote{asm} and the last uses Rascal's HTML library model. The analysis reveals interesting differences between the models which may influence the conclusions of related work~\cite{apianalysis}. For example, it seems that Android jars are released containing much undocumented API which can be (and is) used by clients, and which is not included in the source releases even.
+
+We have used \mthree to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
+
+We are using \mthree to build a PHP static analysis framework, supporting over-approximations of dynamic features such as ``includes'' and ``types''. 
+
+We have used \mthree to analyze a large body of Java source code, comparing the cyclomatic complexity of methods to their size, refuting earlier scientific results reporting on a strong linear model between the two dimensions~\cite{davy}.
 
 \section{Design aspects}
 
@@ -175,7 +194,7 @@ be absolute or relative. Examples of absolute physical locations are
 \loc{|project://MyPrj/Hello.java|} is a relative location. It is always the
 \emph{scheme} of a URI that defines to which root a URI is relative. In the
 case of \texttt{project}, it is an Eclipse project in the current workspace,
-in the case of \texttt{cwd} it is the current working directory. The set of
+in the case of \texttt{file} it is the file system's root. The set of
 physical schemes is open and extensible. We have schemes for Eclipse projects,
 Java class resources, OSGI bundle resources, JDBC data sources, jar files,
 etc.
@@ -354,11 +373,7 @@ We have shown you a taste of \mthree, an extensible and composable model for
 source code artifacts based on relations and trees, with immutable value
 semantics, source location literals and extensible with annotations. It has
 support for basic language independent analyses and we have a detailed model
-for Java. Extensions to be expected soon are C\# and PHP support, and control
-flow and program dependence relations. We use \mthree\  in our course on
-Software Evolution at UvA and OU, and in the context of two research projects
-at CWI. At BENEVOL we hope to have discussion on its usability in a larger
-context of software analysis and software analytics.
+for Java and PHP. 
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
