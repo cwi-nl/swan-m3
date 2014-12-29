@@ -33,7 +33,7 @@
 showspaces=false,
 showtabs=false,
 breaklines=true,
-morekeywords={pointcut,execution,cflowbelow, cflow, percflow, aspect, otherwise},
+morekeywords={pointcut,execution,cflowbelow,cflow,percflow,aspect,otherwise},
 showstringspaces=false,
 breakatwhitespace=true,
 escapeinside={(*@}{@*)},
@@ -124,24 +124,33 @@ columns=flexible,
 
 \section{Motivation}
 
-In the context of the EU FP7 project ``OSSMETER'' we have developed an infra-
-structure for measuring source code. The goal of OSSMETER is to obtain insight
-in the quality of open-source projects from all possible perspectives, including product, process and community\footnote{\url{http://www.ossmeter.org}}. 
+In the context of the EU FP7 project ``OSSMETER'' we have developed an
+infrastructure for measuring source code. The goal of OSSMETER is to obtain
+insight into the quality of open-source projects from all possible perspectives,
+including product, process and
+community\footnote{\url{http://www.ossmeter.org}}.
 
-The three challenges that our part of the design, which focuses on source code, faced
-are \emph{variability}, \emph{integration} and \emph{accuracy}:
-%\textbf{NOTE: we have accuracy in here to distance ourselves from the srcML approach, variability is a given and integration is here due to the Call for Papers}
+The challenges faced by our part of the design, which focuses on source code,
+are \emph{variability}, \emph{integration} and \emph{accuracy}:%\textbf{NOTE: we have accuracy in here to distance ourselves from the srcML approach, variability is a given and integration is here due to the Call for Papers}
 \begin{itemize}
-\item[Variability] is necessary to support the different languages and their dialects we support, as well as the different metrics we will compute.
-\item[Integration] is necessary at a semantic level, where metrics are computed across programming language and domain boundaries, and are combined for further analysis.
-\item[Accuracy] is a prerequisite for insightful analyses. When accuracy is lost in the early stage of fact extraction from source code, the downstream analyses may show interesting but nevertheless meaningless information.
+\item[Variability] is necessary to support the different languages, including
+dialects, we support, as well as the different metrics we will compute.
+\item[Integration] is necessary at a semantic level, where metrics are
+computed across programming language and domain boundaries, and are combined
+for further analysis.
+\item[Accuracy] is a prerequisite for insightful analyses. When accuracy is
+lost in the early stage of fact extraction from source code, the downstream
+analyses may show interesting but nevertheless meaningless information.
 \end{itemize}
 %
-The standard solution for variability and integration is to put an explicit reusable model
-(database, graph) in between such that model producers (parsers \& extractors)
-can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{GXL}, and KDM~\cite{omg-kdm}, ATerms~\cite{BJKO00} and
-S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is that the data is pushed into a general form, this also enables integrating information from different sources. We have been inspired by these examples.
-
+The standard solution for variability and integration is to put an explicit
+reusable model (e.g., database, graph) in the center, such that model
+producers (parsers \& extractors) can be de-coupled from model consumers
+(metrics \& visuals). Examples of such intermediate models are
+FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{HWS00}, KDM~\cite{omg-kdm},
+and ATerms~\cite{BJKO00}. A positive side-effect of intermediate models
+is that the data is pushed into a general form, this also enables integrating
+information from different sources. We have been inspired by these examples.
 
 This abstract is a brief description of \mthree, a set of code models, which should be easy to
 construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
@@ -265,16 +274,16 @@ tuple would be \loc{<|class:///foo/Bar|,|pkg:///foo|>}.
 
 \begin{table}[t]
 \begin{tabularx}{\columnwidth}{|l|l|X|}\hline
- Layer & \lstinline{rel[loc, loc]} & Description \\\hline 
-\textbf{Generic} & \lstinline{containment} & logical containment of 
+ Layer & \lstinline!rel[loc, loc]! & Description \\ \hline 
+\textbf{Generic} & \lstinline!containment! & logical containment of 
 code entities \\
-\textbf{~core} & \lstinline{declarations} & maps logical \lstinline{loc} to physical \lstinline{loc} \\
-& \lstinline{uses} & maps physical \lstinline{loc} to logical \lstinline{loc} \\\hline
- \textbf{OO} & \lstinline{extends} & who extends who \\
- & \lstinline{implements} & who implements who \\
- & \lstinline{methodInvocation} & who invokes who \\
- & \lstinline{methodOverrides}  & who overrides who \\
-& \lstinline{fieldAccess} & who accesses who \\\hline
+\textbf{~core} & \lstinline!declarations! & maps logical \lstinline!loc! to physical \lstinline!loc! \\
+& \lstinline!uses! & maps physical \lstinline!loc! to logical \lstinline!loc! \\ \hline
+ \textbf{OO} & \lstinline!extends! & who extends who \\
+& \lstinline!implements! & who implements who \\
+& \lstinline!methodInvocation! & who invokes who \\
+& \lstinline!methodOverrides! & who overrides who \\
+& \lstinline!fieldAccess! & who accesses who \\ \hline
 \end{tabularx}
 \caption{Binary relations of \mthree \label{table:core}}\vspace{-9mm}
 \end{table}
