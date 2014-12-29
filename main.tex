@@ -436,7 +436,7 @@ which is facilitated by the immutability of \mthree models.
 
 Listing~\ref{code:coverage} shows a concrete example of an \mthree analysis in Rascal. This top level function, \lstinline{estimateCoverage}, analyses any M3 model produced for the Java language produces a percentage over-estimating a system's test coverage  (given a JUnit4 test harness). 
 
-The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} (set difference) and postfix \lstinline{+} (transitive closure) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision. 
+The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} and (set difference) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision. 
 
 %This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
 
