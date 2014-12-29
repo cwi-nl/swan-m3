@@ -190,17 +190,18 @@ fully structured type symbols.
 
 \section{Experience report}
 
-We developed \mthree to satisfy the requirements of the OSSMETER project, but we have been using it for a broader range of software analytics related studies.
+We developed \mthree to satisfy the requirements of the OSSMETER project, but we have been using it for a broader range of software analytics related studies. 
 
-We have used \mthree to construct comparable models of Android API evolution from three sources\footnote{The students of the honors track for the Software Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}: source code, jar files and online documentation. Creating the same model out the three sources required writing three different fact extractors. The first is based on the Eclipse JDT, the second uses ASM~\footnote{asm} and the last uses Rascal's HTML library model. The analysis reveals interesting differences between the models which may influence the conclusions of related work~\cite{apianalysis}. For example, it seems that Android jars are released containing much undocumented API which can be (and is) used by clients, and which is not included in the source releases even.
+We have used \mthree to construct comparable models of Android API evolution from three sources\footnote{The students of the honors track for the Software Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}: source code, jar files and online documentation. Creating the same model out the three sources required writing three different fact extractors. The first is based on the Eclipse JDT, the second uses ASM~\footnote{\url{http://asm.ow2.org/}} and the last uses Rascal's HTML library model. The analysis reveals interesting differences between the models which may influence the conclusions of related work~\cite{apianalysis}. For example, it seems that Android jars are released containing much undocumented API which can be (and is) used by clients, and which is not included in the source releases even.
 
-We have used \mthree to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
+For OSSMETER, \mthree is applied to measure a plethora of object-oriented and procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output between Java and PHP are comparable and we also achieved some level of reuse when the metrics were based on the relational part of \mthree, such as inheritance, overriding and containment relations.
 
-We are using \mthree to improve our PHP static analysis framework called PHP AiR~\cite{phpair}, supporting over-approximations of dynamic features such as ``includes'' and ``types''. 
+We are using \mthree to improve our PHP static analysis framework called PHP AiR~\cite{phpair}, supporting over-approximations of dynamic features such as ``includes'' and ``types''~\cite{ase2014}. 
 
 We have used \mthree to analyze a large body of Java source code, comparing the cyclomatic complexity of methods to their size, refuting earlier scientific results reporting on a strong linear model between the two dimensions~\cite{davy}.
 
-\textbf{TODO: add more, cite more (masters theses)}
+Finally a number of Universiteit van Amsterdam masters theses are based on using \mthree for PHP refactoring, PHP security analysis, quality metrics
+Java refactoring in a concurrency context, and Java reverse engineering.
 
 \section{Design aspects}
 
@@ -385,7 +386,7 @@ In essence a loaded \mthree model is an in-memory database of source code artifa
 
 Since \mthree and Rascal are implemented on the JVM we are using ``soft references'' to store \mthree models, such that we can re-compute caches which have been garbage collected. Especially the fused M3 model and AST models for specific files often drop out of memory because of this, releasing necessary space. Soft references mitigate memory limitations nicely at the cost of run-time efficiency.
 
-On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{aterms,gpce,ecoop}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
+On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{BJKO00,gpce}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
 
 \section{Example}
 
@@ -393,7 +394,7 @@ Listing~\ref{code:coverage} shows a concrete example of an \mthree analysis in R
 
 The basic binary relations \lstinline{methodInvocations},  \lstinline{methodOverrides} and \lstinline{containment} are used to find out who calls who. Relational operators such as infix \lstinline{o} (composition), infix \lstinline(+) (set union), infix \lstinline{-} (set difference) and postfix \lstinline{+} (transitive closure) are used to separate reachable from unreachable code. Comprehensions are used to generate and filter intermediate relations and eventually a library function is called to compute the percentage with given precision. 
 
-This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{landman} for an AST-based code example.
+This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
 
 \begin{figure}[t]
 \begin{lstlisting}[caption=Statically estimating test coverage using \mthree., label=code:coverage,language=rascal]
@@ -419,22 +420,20 @@ real estimateCoverage(M3 m) {
 There is far too much related work to fit in this abstract. We only list primary inspirations for Rascal and \mthree here as an acknowledgment.
 %
 Lexical techniques for fact extraction from source code use regular expression patterns to extract facts from
-program source code. These techniques are supported by languages such as Lex~\cite{Lex}
-and languages such as AWK~\cite{AWK79}, Perl, or Python. Murphy and
-Notkin~\cite{MurphyNotkin95,DBLP:journals/tosem/MurphyN96} extend the
+program source code. These techniques are supported by languages such as Lex and AWK, Perl, or Python. Murphy and
+Notkin~\cite{MurphyNotkin95,DBLP:journals/tosem/MurphyN96} extended the
 basic regular expression support provided by these tools and languages
-to include additional contextual information. Extracted facts can also be organized in relations, which can
-then allow additional facts to be computed once scanning is complete.
+to include additional contextual information such that relations can be extracted once scanning is complete.
 
 Approaches based on grammars naturally handle the nested constructs common to
 programming languages, but, in contrast to lexical techniques, generally
 require the source code to be syntactically correct so it can be parsed.
-Parsing tools such as Yacc~\cite{Yacc} provide basic support for hand-coded
+Parsing tools such as Yacc and ANTLR provide basic support for hand-coded
 fact extraction using the parser's semantic actions. A number of tools also
-exist with direct support for extracting facts from programs. One example is
+exist with direct support for extracting facts from programs. Examples are
 the Rigi system~\cite{Mueller88}, which provides fixed fact extractors for
 several languages and represents facts as tuples in the Rigi Standard Format
-(RSF). Other systems make use of attribute
+(RSF). Meta programming languages, such as Stratego~\cite{BKVV06}, TXL~\cite{TXL06} and ASF+SDF~\cite{BDHJJKKMOSVVV01} provide integrated parsing and tree processing support for source code fact extraction and manipulation in any programming language. SrcML~\cite{srcml} generates XML-annotated source code for the C language which can be queried directly using XML processors. Other more general, like JastAdd, Silver and Kiama, make use of attribute
 grammars~\cite{FNC2,Paakki95,EkmanHedin07,kiama,DBLP:journals/scp/WykBGK10},
 using synthesized attributes to specify facts and inherited attributes to
 propagate these facts through the parse tree.
@@ -452,8 +451,6 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 % datatype and relational operations (e.g., projection, transitive closure,
 % products) as standard \Rascal expressions.
 
-\textbf{TODO: add about TXL MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc., also cite logic systems (from belgium)}
-
 Model-based approaches extract facts into models, representing abstractions of
 the systems being analyzed. MoDisco~\cite{DBLP:journals/infsof/BruneliereCDM14,DBLP:conf/kbse/BruneliereCJM10},
 a model-based tool for modernizing legacy
@@ -461,8 +458,8 @@ systems, supports extracting information about these systems into models
 defined using the Knowledge Discovery Metamodel~\cite{omg-kdm}, an OMG
 standard for modeling the structure and behavior of software systems. 
 Moose~\cite{DBLP:conf/sigsoft/NierstraszDG05,DBLP:journals/sigsoft/Nierstrasz12}
-extracts facts about software systems into models defined using the FAMIX
-family of metamodels.
+extracts facts about software systems into models defined using the FAMIX~\cite{famix}
+family of metamodels. Finally, we recommend reading about source code query mechanism based on logic meta programming, such as Ekeko~\cite{ekeko} and SOUL~\cite{soul}.
 
 \section{Conclusion}
 
@@ -472,7 +469,9 @@ semantics, source location literals and extensible with annotations. It has
 support for basic language independent analyses and we have a detailed model
 for Java and PHP. \mthree is designed for variability, integration and accuracy, all required for software analytics research with a source code component.
 
-The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models. The key open challenge for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed using the EPL license and the community is open for contributions\footnote{\url{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}}.
+%The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
+
+The key open challenge for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed under the EPL license\footnote{\url{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
