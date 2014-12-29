@@ -172,10 +172,7 @@ predictable shape, but we do not assume any reusability of metrics or
 visualizations between models that are produced by different front-ends. The
 design of \mthree  gives accuracy a higher priority than reuse.
 
-\begin{figure}[t]
-	\resizebox{\columnwidth}{!}{\input{architecture}}
-\caption{An Overview: From Code to Metrics and Visuals via \mthree Models.}
-\end{figure}
+
 
 The context of \mthree\ is the Rascal meta-programming language~\cite{KvdSV-
 Rascal11,rascalscam}.\footnote{\url{http://www.rascal-mpl.org}} This is a
@@ -204,8 +201,8 @@ analytics.
 
 We have used \mthree to construct comparable models of Android API evolution
 from three sources: source code, jar files and online
-documentation.\!\footnote{The students of the honors track for the Software
-Evolution course 2013/2014 at Universiteit van Amsterdam did the work.}
+documentation.\!\footnote{Thanks to the students of the UvA Software
+Evolution course 2013.}
 Creating the same model out the three sources required writing three different
 fact extractors. The first is based on the Eclipse JDT, the second uses
 ASM,\!\footnote{\url{http://asm.ow2.org/}} and the last uses Rascal's HTML
@@ -215,6 +212,11 @@ example, it seems that Android jars are released containing many undocumented
 APIs which can be (and are) used by clients, and which are not even included
 in the source releases.
 
+\begin{figure}[t]
+	\resizebox{\columnwidth}{!}{\input{architecture}}
+\caption{An Overview: From Code to Metrics and Visuals via \mthree Models.}
+\vspace{-6mm}
+\end{figure}
 For OSSMETER, \mthree is applied to measure a plethora of object-oriented and
 procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output
 between Java and PHP are comparable, and we also achieved some level of reuse
@@ -311,11 +313,11 @@ Table~\ref{table:core}). An example containment tuple would be
 code entities \\
 \textbf{~core} & \lstinline!declarations! & maps logical \lstinline!loc! to physical \lstinline!loc! \\
 & \lstinline!uses! & maps physical \lstinline!loc! to logical \lstinline!loc! \\ \hline
- \textbf{OO} & \lstinline!extends! & who extends who \\
-& \lstinline!implements! & who implements who \\
-& \lstinline!methodInvocation! & who invokes who \\
-& \lstinline!methodOverrides! & who overrides who \\
-& \lstinline!fieldAccess! & who accesses who \\ \hline
+ \textbf{OO} & \lstinline!extends! & who extends who (logical \lstinline!loc!) \\
+& \lstinline!implements! & who implements who  (logical \lstinline!loc!) \\
+& \lstinline!methodInvocation! & who invokes who (logical \lstinline!loc!) \\
+& \lstinline!methodOverrides! & who overrides who (logical \lstinline!loc!) \\
+& \lstinline!fieldAccess! & who accesses who (logical \lstinline!loc!)\\ \hline
 \end{tabularx}
 \caption{Core Binary relations of \mthree \label{table:core}}\vspace{-9mm}
 \end{table}
@@ -450,6 +452,7 @@ precision.
 %This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
 
 \begin{figure}[t]
+
 \begin{lstlisting}[caption=Statically estimating test coverage using \mthree., label=code:coverage,language=rascal]
 real estimateCoverage(M3 m) {
   allCalls = m@methodInvocations + implicitCalls(m);
