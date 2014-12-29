@@ -154,8 +154,7 @@ information from different sources. We have been inspired by these examples.
 This paper is a brief description of \mthree, a set of code models which
 should be easy to construct, easy to extend to include language specifics, and
 easy to consume to produce metrics and other analyses.\!\footnote{An earlier,
-shorter version of this paper was presented at BENEVOL 2014 (no formal
-proceedings).} \mthree consists of an abstract syntax tree (AST) layer
+shorter version of this paper was presented at BENEVOL 2014.} \mthree consists of an abstract syntax tree (AST) layer
 (hierarchical) and a relational (flat) layer. The AST layer uses a standard
 interface, but is expected to be language specific, while the relational layer
 is more abstract in nature and made for reuse.
@@ -170,7 +169,7 @@ semantics. Such a language independent model would be inaccurate (wrong), and
 deliver meaningless metrics. Instead we opt for a unified \emph{form} for
 storing facts about programs. This means that all models will have a
 predictable shape, but we do not assume any reusability of metrics or
-visualizations between models that are produced by different parsers. The
+visualizations between models that are produced by different front-ends. The
 design of \mthree  gives accuracy a higher priority than reuse.
 
 \begin{figure}[t]
