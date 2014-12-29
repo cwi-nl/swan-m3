@@ -265,10 +265,10 @@ tuple would be \loc{<|class:///foo/Bar|,|pkg:///foo|>}.
 
 \begin{table}[t]
 \begin{tabularx}{\columnwidth}{|l|l|X|}\hline
-  & \lstinline{rel[loc, loc]} & Description \\\hline 
-\textbf{generic} & \lstinline{containment} & logical containment of 
+ Layer & \lstinline{rel[loc, loc]} & Description \\\hline 
+\textbf{Generic} & \lstinline{containment} & logical containment of 
 code entities \\
- & \lstinline{declarations} & maps logical \lstinline{loc} to physical \lstinline{loc} \\
+\textbf{~core} & \lstinline{declarations} & maps logical \lstinline{loc} to physical \lstinline{loc} \\
 & \lstinline{uses} & maps physical \lstinline{loc} to logical \lstinline{loc} \\\hline
  \textbf{OO} & \lstinline{extends} & who extends who \\
  & \lstinline{implements} & who implements who \\
@@ -276,7 +276,7 @@ code entities \\
  & \lstinline{methodOverrides}  & who overrides who \\
 & \lstinline{fieldAccess} & who accesses who \\\hline
 \end{tabularx}
-\caption{Core binary relations of \mthree \label{table:core}}\vspace{-9mm}
+\caption{Binary relations of \mthree \label{table:core}}\vspace{-9mm}
 \end{table}
 
 This core model is language independent, facilitating not only, volume
