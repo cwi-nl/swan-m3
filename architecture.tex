@@ -4,28 +4,28 @@
 \tikzstyle{aline} = [draw, dashed, shorten >= 0.1em, -latex, semithick]
 \tikzstyle{box} = [rectangle, draw, text width=4em, text centered, rounded corners, minimum height=3em]
 \tikzstyle{triangle} = [isosceles triangle, shape border rotate=90,isosceles triangle stretches=true, anchor=south, draw]
-\begin{tikzpicture}[node distance=8em]
+\begin{tikzpicture}[node distance=2.5em]
 	\node (Input) [box] { \footnotesize \texttt{|project://rascal|} };
-	\node (ASTStealing) [rectangle, draw, dotted, right of=Input] {
-		\begin{tikzpicture}[node distance=6em, solid]
+	\node (ASTStealing) [rectangle, draw, dotted, right=of Input] {
+		\begin{tikzpicture}[node distance=2em, solid]
 			\small
 			\node (Caption) [font=\fontsize{6}{6}\color{black!70}] { Reuse AST };
-			\node (Compiler) [box, below of= Caption,yshift=3.5em] { Parser / Compiler };
-			\node (InternalAST) [triangle, minimum height=4em, minimum width=6em, below of=Compiler] { };
+			\node (Compiler) [box, below= of Caption, yshift=1.5em] { Parser / Compiler };
+			\node (InternalAST) [triangle, minimum height=4em, minimum width=6em, below= of Compiler] { };
 			\node (InternalASTActual) [below=-2.3em of InternalAST, text width=4em, text centered] { Internal AST };
 			\path [line] (Compiler) -- (InternalAST);
 		\end{tikzpicture}
 	};
 
-	\node (Translator) [box, right of=ASTStealing] { Translator };
+	\node (Translator) [box, right = of ASTStealing] { Translator };
 
-	\node (M3Relations) [box, right of=Translator] { \mthree };
-	\node (Extractor) [box, below of=M3Relations] { Extractor };
-	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below of=Extractor] {};
+	\node (Extractor) [box, right = of Translator] { Extractor };
+	\node (M3Relations) [box, above = of Extractor] { \mthree };
+	\node (RascalAST) [triangle, minimum height=4em, minimum width=6em, below = of Extractor] {};
 
-	\node (Linker) [box, right of =M3Relations] { linker };
-	\node (M3Total) [box, below of= Linker] { Merged \mthree } ;
-	\node (Result) [box, below of= M3Total] { Metrics and visualisation };
+	\node (Linker) [box, right = of M3Relations] { linker };
+	\node (M3Total) [box, below = of  Linker] { Merged \mthree } ;
+	\node (Result) [box, below = of  M3Total] { Metrics and visualisation };
 
 	\path [line] (Input) -- (ASTStealing);
 	\path [line] (ASTStealing) -- (Translator);
