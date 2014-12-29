@@ -407,16 +407,14 @@ real estimateCoverage(M3 m) {
 
 \section{Related Work}
 
-Lexical techniques use regular expression patterns to extract facts from
-program source code. These techniques are supported by tools such as Lex~\cite{Lex}
+There is far too much related work to fit in this abstract. We only list primary inspirations for Rascal and \mthree here as an acknowledgment.
+%
+Lexical techniques for fact extraction from source code use regular expression patterns to extract facts from
+program source code. These techniques are supported by languages such as Lex~\cite{Lex}
 and languages such as AWK~\cite{AWK79}, Perl, or Python. Murphy and
 Notkin~\cite{MurphyNotkin95,DBLP:journals/tosem/MurphyN96} extend the
 basic regular expression support provided by these tools and languages
-to include additional contextual information, allowing regular
-expressions to be given in a hierarchy where some expressions only match after
-other expressions have already matched (e.g., an expression matching a
-function call may require an expression matching a function definition to
-match first). Extracted facts can also be organized in relations, which can
+to include additional contextual information. Extracted facts can also be organized in relations, which can
 then allow additional facts to be computed once scanning is complete.
 
 Approaches based on grammars naturally handle the nested constructs common to
@@ -445,7 +443,7 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 % datatype and relational operations (e.g., projection, transitive closure,
 % products) as standard \Rascal expressions.
 
-\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc., also cite logic systems (from belgium)}
+\textbf{TODO: add about TXL MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc., also cite logic systems (from belgium)}
 
 Model-based approaches extract facts into models, representing abstractions of
 the systems being analyzed. MoDisco~\cite{DBLP:journals/infsof/BruneliereCDM14,DBLP:conf/kbse/BruneliereCJM10},
