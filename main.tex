@@ -77,6 +77,10 @@
 \newcommand{\loc}[1]{\small{\texttt{#1}}\xspace}
 \newcommand{\mthree}{\ensuremath{M^3}\xspace}
 
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning}
+
 \begin{document}
 
 \title{{\huge $M^3$: A General Model for Source Code Analytics in Rascal}}
@@ -129,7 +133,8 @@ not assume any reusability of metrics or visuals producers between models
 produced by different parsers. The design of \mthree  gives accuracy a higher priority than reuse.
 
 \begin{figure}[t]
-\includegraphics[width=\columnwidth]{m3}
+%\includegraphics[width=\columnwidth]{m3}
+	\resizebox{\columnwidth}{!}{\input{architecture}}
 \caption{An overview: from code to metrics and visuals via M3 models.}
 \end{figure}
 
