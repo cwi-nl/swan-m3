@@ -143,8 +143,8 @@ this paper are that Rascal has value semantics for all in-memory data,
 including sets and relations, it has support for URI literals, called ``source
 locations'', and it has term rewriting and relational calculus primitives to
 deal with hierarchical and relational data, respectively. This includes
-generic traversal and pattern matching primitives as well as relational
-operators such as transitive closure and comprehensions.
+generic traversal~\cite{scrap,travfuncs} and pattern matching primitives~\cite{?} as well as relational
+operators such as transitive closure and comprehensions~\cite{tarski}.
 
 The differences between \mthree and the aforementioned related work is that it deals with purely immutable,
 typed, data and which can be directly produced, manipulated and analyzed using
@@ -291,7 +291,7 @@ expensive to keep in memory, so in M3 models they are always computed \emph
 
 \subsection{Types} For types we introduce a single sort called
 \texttt{TypeSymbol}. We use this to represent any kind of abstract value that
-variables and expressions in a language may produce. For Java we have a
+variables and expressions in a language may produce~\cite{abstractinterpretation}. For Java we have a
 default set of type symbols to represent (parametrized) class and interface
 types method signatures and its primitive types. These symbols can be used to
 compute with raw and parametrized types, either instantiated or
@@ -302,7 +302,7 @@ parameter is instantiated by the String class. We extended the core \mthree\
 model with initial types: a relation from declarations to the types they
 generate and we annotate the trees of expressions with the types they produce.
 Using type symbols we may compute with and reason about dynamic artifacts that
-are never declared yet may exist at run-time. For example, a metrics for the
+are never declared yet may exist at run-time. For example, an upper-bound for the
 number of possible instantiations of a parametrized type can be computed based
 on such information.
 
@@ -325,15 +325,18 @@ and the \texttt{link} function does the same but updates the authority fields
 of all logical locations such that uses from one project may point to the
 declarations of another.
 
-Currently we have extractors of \mthree models for jar files (i.e. from
-bytecode) from the JRE and Eclipse plugins, and from the source code of
-Eclipse project separately.  We then link these independently acquired M3
-models to form complete models for further analysis.
+%Currently we have extractors of \mthree models for jar files (i.e. from
+%bytecode) from the JRE and Eclipse plugins, and from the source code of
+%Eclipse project separately.  We then link these independently acquired M3
+%models to form complete models for further analysis.
 
 \subsection{Efficiency and Memory Consumption}
 
-\textbf{TODO} explain caveat.
-\textbf{TODO} add (future) work on hash trie optimization, Rascal compiler etc. 
+In essence a loaded \mthree model is an in-memory database of source code artifacts. For a big software system, the memory requirements are big and the efficiency is limited by I/O bottlenecks (network access, disk access and cache misses). Our current implementation still suffers from these effects, which are aggravated by the immutability aspect.
+
+Since \mthree and Rascal are implemented on the JVM we are using ``soft references'' to store \mthree models, such that we can re-compute caches which have been garbage collected. Especially the fused M3 model and AST models for specific files often drop out of memory because of this, releasing necessary space. Soft references mitigate memory limitations nicely at the cost of run-time efficiency.
+
+On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{aterms,gpce,ecoop}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
 
 \section{Example}
 
@@ -379,7 +382,7 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 % datatype and relational operations (e.g., projection, transitive closure,
 % products) as standard \Rascal expressions.
 
-\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc.}
+\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc., also cite logic systems (from belgium)}
 
 \section{Conclusion}
 
