@@ -448,7 +448,7 @@ systems, supports extracting information about these systems into models
 defined using the Knowledge Discovery Metamodel~\cite{omg-kdm}, an OMG
 standard for modeling the structure and behavior of software systems. 
 Moose~\cite{DBLP:conf/sigsoft/NierstraszDG05,DBLP:journals/sigsoft/Nierstrasz12}
-extracts facts about software systems into models defined using the FAMIX
+extracts facts about software systems into models defined using the FAMIX~\cite{famix}
 family of metamodels. Finally, we recommend reading about source code query mechanism based on logic meta programming, such as Ekeko~\cite{ekeko} and SOUL~\cite{soul}.
 
 \section{Conclusion}
@@ -459,7 +459,9 @@ semantics, source location literals and extensible with annotations. It has
 support for basic language independent analyses and we have a detailed model
 for Java and PHP. \mthree is designed for variability, integration and accuracy, all required for software analytics research with a source code component.
 
-The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models. The key open challenge for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed using the EPL license and the community is open for contributions\footnote{\url{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}}.
+%The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
+
+The key open challenge for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed under the EPL license\footnote{\url{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
