@@ -116,8 +116,8 @@ The standard solution for variability and integration is to put an explicit reus
 can be de-coupled from model consumers (metrics \& visuals). Examples of such intermediate models are FAMIX~\cite{famix}, RSF~\cite{rsf}, GXL~\cite{GXL}, and KDM~\cite{KDM}, ATerms~\cite{aterms} and
 S-Expressions~\cite{sexpr}. A positive side-effect of intermediate models is that the data is pushed into a general form, this also enables integrating information from different sources. We have been inspired by these examples.
 
-This abstract is a brief description of \mthree\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}, a set of code models, which should be easy to
-construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
+This abstract is a brief description of \mthree, a set of code models, which should be easy to
+construct, easy to extend to include language specifics and easy to consume to produce metrics and other analyses\footnote{An earlier shorter version of the current abstract on \mthree has been presented earlier at BENEVOL 2014 (no formal proceedings).}. \mthree consists of a abstract syntax tree (AST) layer (hierarchical) and a relational (flat) layer. The AST layer is standardized on interface, but expected to be language specific, while the relational layer is more abstract in nature and made for reuse.
 
 \emph{The main threat to validity of any intermediate model which is generic enough to be reusable between different programming languages is that accuracy may be lost. This is why the \mthree standard first prescribes precise language-specific AST models and then language agnostic relational models where it is possible to abstract.}
 The reader should be aware that we do \emph{not} intend to
@@ -168,7 +168,7 @@ We have used \mthree to analyze a large body of Java source code, comparing the 
 
 \subsection{Textual models}
 
-M3 is, like all Rascal data, fully typed and fully serializable as readable
+\mthree is, like all Rascal data, fully typed and fully serializable as readable
 text with a standard notation that is equal to the expression syntax for
 literals. This means that any intermediate step can be visualized as plain
 text and not only searched and edited using standard text editing facilities,
@@ -333,6 +333,10 @@ models to form complete models for further analysis.
 \textbf{TODO} explain caveat.
 \textbf{TODO} add (future) work on hash trie optimization, Rascal compiler etc. 
 
+\section{Example}
+
+\textbf{TODO: a short Rascal code example doing some analytics here?}
+
 \section{Related Work}
 
 Lexical techniques use regular expression patterns to extract facts from
@@ -373,7 +377,7 @@ formulating program slicing using relational techniques~\cite{Vankov05}.
 % datatype and relational operations (e.g., projection, transitive closure,
 % products) as standard \Rascal expressions.
 
-\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM}
+\textbf{TODO: add about MOOSE, srcML, MoDisCo KDM, software ecosystems research by Nierstrasz et al, Moonen, etc.}
 
 \section{Conclusion}
 
@@ -381,9 +385,9 @@ We have shown you a taste of \mthree, an extensible and composable model for
 source code artifacts based on relations and trees, with immutable value
 semantics, source location literals and extensible with annotations. It has
 support for basic language independent analyses and we have a detailed model
-for Java and PHP. \mthree is designed for variability, integration and accuracy. 
+for Java and PHP. \mthree is designed for variability, integration and accuracy, all required for software analytics research with a source code component.
 
-The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
+The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models. The key open challenge for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed using the EPL license and the community is open for contributions\footnote{\url{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
