@@ -239,58 +239,58 @@ concurrency-related Java refactorings, and Java reverse engineering.
 
 \subsection{Textual models}
 
-\mthree is, like all Rascal data, fully typed and fully serializable as readable
-text with a standard notation that is equal to the expression syntax for
-literals. This means that any intermediate step can be visualized as plain
+\mthree is, like all Rascal data, fully typed and fully serializable as
+readable text with a standard notation that is equal to the expression syntax
+for literals. This means that any intermediate step can be visualized as plain
 text and not only searched and edited using standard text editing facilities,
 but also stored and retrieved persistently. One particular aspect of the
 Rascal IDE is that all printed source location literals (see below) in editors
 and consoles are treated as \emph{hyperlinks}. M3 models are therefore
-``programmer friendly'': easy to explore both inter-actively and
+``programmer friendly'': easy to explore both interactively and
 programmatically using low-brow techniques.
 
 \subsection{Locations} 
 
-To verify the correctness of metrics or for explaining them we want to trace
-back measurements to code. For example, when we present the largest class in a
+To verify the correctness of metrics, or for explaining them, we want to trace
+measurements back to code. For example, when we present the largest class in a
 project, we need the size as well as a link to the source code of this class.
-In other words, want to link information back to source code for all derived
-facts we produce. From the semantic web we take the idea of using URI (Uniform
-Resource Identifiers) to model the identity of any artifact. Each URI takes
-the following shape: \loc{|<scheme>://<auth>/<path>?<qry>|(<off>,<len>)}.
-
-We distinguish between two kinds of code locations: physical and logical. A
-\emph{physical} location identifies a storage location. Physical locations may
-be absolute or relative. Examples of absolute physical locations are
-\loc{|file:///tmp/Hello.java|} and \loc{|http://foo.com/index.html|}, and
-\loc{|project://MyPrj/Hello.java|} is a relative location. It is always the
-\emph{scheme} of a URI that defines to which root a URI is relative. In the
-case of \texttt{project}, it is an Eclipse project in the current workspace,
-in the case of \texttt{file} it is the file system's root. The set of
-physical schemes is open and extensible. We have schemes for Eclipse projects,
-Java class resources, OSGI bundle resources, JDBC data sources, jar files,
-etc.
+In other words, we want to link information back to source code for all
+derived facts we produce. From the semantic web we take the idea of using URIs
+(Uniform Resource Identifiers), of the form 
+\loc{|<scheme>://<auth>/<path>?<qry>|(<off>,<len>)}, 
+to model the identity of any artifact. We
+distinguish between two kinds of code locations: physical and logical. A
+\emph{physical} location identifies a storage location, and may be absolute or
+relative. Examples of absolute physical locations are
+\loc{|file:///tmp/Hello.java|} and \loc{|http://foo.com/index.html|}, while an
+example of a relative location is \loc{|project://MyPrj/Hello.java|}. It is always the
+\emph{scheme} of a URI that defines to
+which root a URI is relative. In the case of \texttt{project}, it is an
+Eclipse project in the current workspace, while in the case of \texttt{file}
+it is the file system's root. The set of physical schemes is open and
+extensible, with schemes for Eclipse projects, Java class resources, OSGI
+bundle resources, JDBC data sources, jar files, and other resources.
 
 A \emph{logical} code location is akin to a fully qualified name. For each
 specific language we design a naming scheme for each source code element that
 is, in some sense, declared. An example of a logical location is
 \loc{java+class://myProject/java/util/List}. The scheme represents both the
-language and the kind of artifact that is identified. The authority declares
-the scope from which the name is resolved, in this case from
-\texttt{myProject} which depends on a particular version of the Java run-time.
-Finally, the path identifies the qualified name of the artifact in this scope.
-One goal of logical locations is to link uniquely to physical locations, at a
-certain moment in time, and at the same time be more or less stable under
-irrelevant code movement (such as moving the root source directory within a
-project). Another goal for such links is to be readable, writeable,
-recognizable and memorizable by human beings when developing new extractors,
-metrics or visuals. I.e. we might explore an \mthree\ model by projecting the
-information for an arbitrary class: the Rascal command
+language and the kind of artifact that is identified. The URI
+\textit{authority} declares the scope from which the name is resolved, in this
+case from \texttt{myProject} which depends on a particular version of the Java
+run-time. Finally, the path identifies the qualified name of the artifact in
+this scope. One goal of logical locations is to uniquely link to physical
+locations, at a certain moment in time, and at the same time be more or less
+stable under irrelevant code movement (such as moving the root source
+directory within a project). Another goal is for such links to be readable,
+writeable, recognizable and memorizable by human beings when developing new
+extractors, metrics or visuals. For instance, we might explore an \mthree\
+model by projecting the information for an arbitrary class: the Rascal command
 \texttt{m@inheritance[|class://myPrj/java/util/List|]} would produce all
-interfaces that inherit from java.util.List.
+interfaces that inherit from \verb|java.util.List|.
 
 The query part of a URI is used to \emph{modify} identities, for example to
-scope them for a version of a system:
+scope them for a particular version of a system:
 \loc{class://myPrj/java/util/List?svn=4242}. The offset and length fields are
 used to identify consecutive slice of characters of the identified artifact.
 
@@ -300,10 +300,10 @@ with these locations and it embeds these locations into symbolic facts (such
 as types) to link back to source code whenever possible.
 
 \subsection{Relations.} The \mthree\  model is both layered and compositional.
-This means that \mthree\ models can be combined (``linked'') and that they can
-be extended (``annotated''). The core relations are all between code
-locations (see Table~\ref{table:core}). An example containment
-tuple would be \loc{<|class:///foo/Bar|,|pkg:///foo|>}.
+This means that \mthree\ models can be combined (``linked'') and extended
+(``annotated''). The core relations are all between code locations (see
+Table~\ref{table:core}). An example containment tuple would be
+\loc{<|class:///foo/Bar|,|pkg:///foo|>}.
 
 \begin{table}[t]
 \begin{tabularx}{\columnwidth}{|l|l|X|}\hline
@@ -321,17 +321,16 @@ code entities \\
 \caption{Binary relations of \mthree \label{table:core}}\vspace{-9mm}
 \end{table}
 
-This core model is language independent, facilitating not only, volume
-metrics, browsing visuals (drill-down) and generic aggregation over
-containment relations, but also dependence between artifacts and thus impact
-and coupling/cohesion analyses. Also note that this core model is not
-restricted to handling programming languages. It can be used without doubt to
-model other kinds of formal languages like grammars, schema languages or even
-pictorial languages.
+This core model is language independent, facilitating not only volume metrics,
+browsing visuals (drill-down) and generic aggregation over containment
+relations, but also dependence between artifacts and thus impact and
+coupling/cohesion analyses. Also note that this core model is not restricted
+to handling programming languages. It can be used to model other kinds of
+formal languages like grammars, schema languages, or even pictorial languages.
 
 For modeling language specific information we annotate the above core model
 with extra relations. Again these are binary relations between logical
-locations. Examples for Java are \emph{inheritance}, \emph{overrides},
+locations. Examples for Java are \emph{inheritance}, \emph{overrides}, and
 \emph{invocations}. These relations model key aspects of the static semantics
 of a programming language. Note that we never refer to instantiated or dynamic
 objects here, not even parametric type instantiations. All relations refer to
@@ -342,8 +341,8 @@ interface is called we should not infer immediately all the call sites and add
 those to the invocations relation. Some metrics may want to count the fan-out
 to abstract methods, while other metrics want to know the impact on concrete
 implementations. You can compute this kind of information by composing basic
-facts, e.g. ``invocation $\circ$ overrides'' gives all the concrete callees
-for calls to abstract methods, and then compute a metric over the resulting
+facts---e.g. ``invocation $\circ$ overrides'' gives all the concrete callees
+for calls to abstract methods---and then compute a metric over the resulting
 relation instead.
 
 \subsection{Trees.} For abstract syntax trees we use a general concept of
@@ -353,10 +352,10 @@ language constructs). For \mthree\ we standardize some of the names used in
 defining AST types. In the core we standardize on five algebraic sorts to use
 when defining an abstract syntax: \texttt{Expression}, \texttt{Declaration},
 \texttt{Statement}, \texttt{Type}, \texttt{Modifier}. The goal is to add as
-few as extra sorts as possible when adding a new language. This leads to
-models which \emph{over-approximate} the possible programs, but also increases
-the chance of reuse and extending existing fact extractors. For example, if
-all statements are in the same sort, then a basic function computing the
+few extra sorts as possible when adding a new language. This leads to models
+which \emph{over-approximate} the possible programs, but also increases the
+chance of reuse and extending existing fact extractors. For example, if all
+statements are in the same sort, then a basic function computing the
 cyclomatic complexity can be extended to cover a new language by just adding
 cases for the new types of statements (e.g. a \texttt{foreach} statement). We
 also provide annotations types for specific nodes, i.e. all nodes have a
@@ -364,7 +363,7 @@ also provide annotations types for specific nodes, i.e. all nodes have a
 declarations may have a \texttt{decl} annotation to their logical location
 identifier and all Expressions may have a \texttt{type} annotation (see
 below).
-
+%
 Trees are useful mostly for the computation of metrics over code units that
 contain statements, such as cyclomatic complexity, but also to infer data and
 control flow information for use in the more advanced analyses. Trees are also
@@ -373,20 +372,21 @@ expensive to keep in memory, so in M3 models they are always computed \emph
 
 \subsection{Types} For types we introduce a single sort called
 \texttt{TypeSymbol}. We use this to represent any kind of abstract value that
-variables and expressions in a language may produce~\cite{abstractinterpretation}. For Java we have a
-default set of type symbols to represent (parametrized) class and interface
-types method signatures and its primitive types. These symbols can be used to
+variables and expressions in a language may produce. For Java we have a
+default set of type symbols to represent (parameterized) class and interface
+types, method signatures, and primitive types. These symbols can be used to
 compute with raw and parametrized types, either instantiated or
 uninstantiated. An example of a type symbol is:
-\loc{class(|class:///java/util/List, [class(|class:///java/lang/String|,[])])}, meaning the instantiated
-parametrized List type generated by the List class definition, and its type
-parameter is instantiated by the String class. We extended the core \mthree\
-model with initial types: a relation from declarations to the types they
-generate and we annotate the trees of expressions with the types they produce.
+\loc{class(|class:///java/util/List, [class(|class:///java/lang/String|,[])])}, 
+meaning the instantiated
+parametrized List type generated by the List class definition with its type
+parameter instantiated by the String class. We extended the core \mthree\
+model with initial types---a relation from declarations to the types they
+generate---and we annotate the trees of expressions with the types they produce.
 Using type symbols we may compute with and reason about dynamic artifacts that
-are never declared yet may exist at run-time. For example, an upper-bound for the
-number of possible instantiations of a parametrized type can be computed based
-on such information.
+are never declared yet may exist at run-time. For example, an upper-bound for
+the number of possible instantiations of a parametrized type can be computed
+based on such information.
 
 \subsection{Model composition} When we extract \mthree\  models we do this
 incrementally, i.e. per file, per project, per composition of a project with
@@ -395,17 +395,17 @@ its dependencies. Each file (in a given programming language) produces one
 single \mthree\  model by applying set union to all the relations of the
 model. Finally, if there are project dependencies, we may fuse the \mthree\
 models for different projects.
-
+%
 Some analyses are best done before fusion. We compute the volume of a project
 before we fuse in the declarations of the jars we depend on. Other analyses
-are done only after fusing: Depth of inheritance can only be computed if the
+are done only after fusing: depth of inheritance can only be computed if the
 models of classes we depend on our fully available. Since \mthree\  models are
-immutable values, like all Rascal values, it can never happen that we
-accidentally mix such models up. The \texttt{compose} function is called
-explicitly by the programmer to union the relation between two \mthree\ models
-and the \texttt{link} function does the same but updates the authority fields
-of all logical locations such that uses from one project may point to the
-declarations of another.
+immutable values, like all Rascal values, such models can never be accidentally
+mixed. The \texttt{compose} function is called
+explicitly by the programmer to union the relation between two \mthree\ models;
+the \texttt{link} function does the same, but updates the authority fields
+of all logical locations such that uses in one project may point to
+declarations in another.
 
 %Currently we have extractors of \mthree models for jar files (i.e. from
 %bytecode) from the JRE and Eclipse plugins, and from the source code of
@@ -414,11 +414,24 @@ declarations of another.
 
 \subsection{Efficiency and Memory Consumption}
 
-In essence a loaded \mthree model is an in-memory database of source code artifacts. For a big software system, the memory requirements are big and the efficiency is limited by I/O bottlenecks (network access, disk access and cache misses). Our current implementation still suffers from these effects, which are aggravated by the immutability aspect.
-
-Since \mthree and Rascal are implemented on the JVM we are using ``soft references'' to store \mthree models, such that we can re-compute caches which have been garbage collected. Especially the fused M3 model and AST models for specific files often drop out of memory because of this, releasing necessary space. Soft references mitigate memory limitations nicely at the cost of run-time efficiency.
-
-On the other hand we are investing in low level optimizations for in-memory hierarchical data-structures~\cite{BJKO00,gpce}. These results are hopeful, making it feasible to scale to even larger analyses without sacrificing immutability. We are also planning to benefit from scaling out in parallel, which is facilitated by the immutability of \mthree models. 
+In essence a loaded \mthree model is an in-memory database of source code
+artifacts. For a big software system, the memory requirements are big and the
+efficiency is limited by I/O bottlenecks (network access, disk access and
+cache misses). Our current implementation still suffers from these effects,
+which are aggravated by the immutability aspect.
+%
+Since \mthree and Rascal are implemented on the JVM we are using ``soft
+references'' to store \mthree models, such that we can re-compute caches which
+have been garbage collected. The fused \mthree model and AST models for
+specific files often drop out of memory because of this, releasing necessary
+space. Soft references mitigate memory limitations nicely at the cost of run-
+time efficiency.
+%
+On the other hand we are investing in low level optimizations for in-memory
+hierarchical data-structures~\cite{BJKO00,gpce}. These results are hopeful,
+making it feasible to scale to even larger analyses without sacrificing
+immutability. We are also planning to benefit from scaling out in parallel,
+which is facilitated by the immutability of \mthree models.
 
 \section{Example}
 
