@@ -45,7 +45,7 @@
 	\path [line, shorten <= 1mm] (Input) -- (ASTStealing);
 	\path [line] (ASTStealing) -- (Translator);
 
-	\path [line] (Translator) -- (M3Relations);
+	\path [line, shorten >= 2.25mm] (Translator) -- (M3Relations);
 	\path [line] (Translator) -- (RascalAST);
 	\path [line] (RascalAST) -- (Extractor);
 	\path [line] (Extractor) -- (M3RelationsOuter);
