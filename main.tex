@@ -113,9 +113,9 @@ columns=flexible,
 %\author{ Anastasia Izmaylova, Paul Klint, Ashim Shahi and Jurgen Vinju, Davy, Michael}
 \author{
 \IEEEauthorblockN{Bas Basten\IEEEauthorrefmark{2}, Mark Hills\IEEEauthorrefmark{1}, Paul Klint\IEEEauthorrefmark{2}, 
-Davy Landman\IEEEauthorrefmark{2}, Michael Steindorfer\IEEEauthorrefmark{2}, Ashim Shahi\IEEEauthorrefmark{2}, 
+Davy Landman\IEEEauthorrefmark{2}, Ashim Shahi\IEEEauthorrefmark{2}, Michael Steindorfer\IEEEauthorrefmark{2}, 
 Jurgen Vinju\IEEEauthorrefmark{2}}
-\IEEEauthorblockA{\IEEEauthorrefmark{2}Centrum Wiskunde \& Informatica, Amsterdam, The Netherlands\\\{Bas.Basten,Paul.Klint,Davy.Landman,Michael.Steindorfer,Ashim.Shahi,Jurgen.Vinju\}@cwi.nl}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}Centrum Wiskunde \& Informatica, Amsterdam, The Netherlands\\\{Bas.Basten,Paul.Klint,Davy.Landman,Ashim.Shahi,Michael.Steindorfer,Jurgen.Vinju\}@cwi.nl}
 \IEEEauthorblockA{\IEEEauthorrefmark{1}East Carolina University, Greenville, NC, USA\\mhills@cs.ecu.edu}
 }
 
@@ -126,24 +126,24 @@ Jurgen Vinju\IEEEauthorrefmark{2}}
 In the context of the EU FP7 project ``OSSMETER'' we have developed an
 infrastructure for measuring source code. The goal of OSSMETER is to obtain
 insight into the quality of open-source projects from all possible perspectives,
-including product, process and
+including product, process, and
 community.\!\footnote{\url{http://www.ossmeter.org}}
 
 % \textbf{NOTE: we have accuracy in here to distance ourselves from the srcML
 % approach, variability is a given and integration is here due to the Call for Papers}
 The challenges faced by our part of the design, which focuses on source code,
-are \emph{variability}, \emph{integration} and \emph{accuracy}. Variability is
+are \emph{variability}, \emph{integration}, and \emph{accuracy}. Variability is
 necessary to support the different languages, including dialects, we support,
 as well as the different metrics we will compute. Integration is necessary at
 a semantic level, where metrics are computed across programming language and
-domain boundaries, and are combined for further analysis. Accuracy is a
+domain boundaries and are combined for further analysis. Accuracy is a
 prerequisite for insightful analyses. When accuracy is lost in the early stage
 of fact extraction from source code, the downstream analyses may show
 interesting but nevertheless meaningless information.
 
 The standard solution for variability and integration is to put an explicit
 reusable model (e.g., database, graph) in the center, such that model
-producers (parsers \& extractors) can be de-coupled from model consumers
+producers (parsers \& extractors) can be decoupled from model consumers
 (metrics \& visuals). Examples of such intermediate models are
 FAMIX~\cite{famix}, RSF~\cite{Mueller88}, GXL~\cite{HWS00}, KDM~\cite{omg-kdm},
 and ATerms~\cite{BJKO00}. A positive side-effect of intermediate models
@@ -214,17 +214,17 @@ in the source releases.
 \begin{figure}[t]
 	\resizebox{\columnwidth}{!}{\input{architecture}}
 \caption{An Overview: From Code to Metrics and Visuals via \mthree Models.}
-\vspace{-6mm}
+\vspace{-5mm}
 \end{figure}
 For OSSMETER, \mthree is applied to measure a plethora of object-oriented and
-procedural code metrics for Java and PHP~\cite{mood,ck}. The metrics output
+procedural code metrics~\cite{mood,ck} for Java and PHP. The metrics output
 between Java and PHP are comparable, and we also achieved some level of reuse
 when the metrics were based on the relational part of \mthree, such as
 inheritance, overriding and containment relations.
 
 We are using \mthree to improve our PHP static analysis framework called PHP
 AiR~\cite{phpair}, supporting over-approximations of dynamic features such as
-``includes''~\cite{ase2014} and ``types''.
+file inclusion~\cite{ase2014} and types.
 
 We have used \mthree to analyze a large body of Java source code, comparing
 the cyclomatic complexity of methods to their size, refuting earlier
@@ -274,11 +274,11 @@ bundle resources, JDBC data sources, jar files, and other resources.
 A \emph{logical} code location is akin to a fully qualified name. For each
 specific language we design a naming scheme for each source code element that
 is, in some sense, declared. An example of a logical location is
-\loc{java+class://myProject/java/util/List}. The scheme represents both the
+\loc{|java+class://myProject/java/util/List|}. The scheme represents both the
 language and the kind of artifact that is identified. The URI
 \textit{authority} declares the scope from which the name is resolved, in this
 case from \texttt{myProject} which depends on a particular version of the Java
-run-time. Finally, the path identifies the qualified name of the artifact in
+runtime. Finally, the path identifies the qualified name of the artifact in
 this scope. One goal of logical locations is to uniquely link to physical
 locations, at a certain moment in time, and at the same time be more or less
 stable under irrelevant code movement (such as moving the root source
@@ -294,9 +294,9 @@ interfaces that inherit from \verb|java.util.List|.
 %\loc{class://myPrj/java/util/List?svn=4242}. The offset and length fields are
 %used to identify consecutive slice of characters of the identified artifact.
 
-\mthree\ models are build on this concept of logical and physical source
-locations. It uses binary relations between locations, it annotates AST nodes
-with these locations and it embeds these locations into symbolic facts (such
+\mthree\ models are built on this concept of logical and physical source
+locations. \mthree\ uses binary relations between locations; annotates AST nodes
+with these locations; and embeds these locations into symbolic facts (such
 as types) to link back to source code whenever possible.
 
 \subsection{Relations.} The \mthree\  model is both layered and compositional.
@@ -318,7 +318,8 @@ code entities \\
 & \lstinline!methodOverrides! & who overrides who (logical \lstinline!loc!) \\
 & \lstinline!fieldAccess! & who accesses who (logical \lstinline!loc!)\\ \hline
 \end{tabularx}
-\caption{Core Binary relations of \mthree \label{table:core}}\vspace{-9mm}
+\caption{Core Binary relations of \mthree \label{table:core}}
+\vspace{-5mm}
 \end{table}
 
 This core model is language independent, facilitating not only volume metrics,
@@ -334,7 +335,7 @@ locations (Table~\ref{table:core}). These relations model key aspects of the sta
 of a programming language. Note that we never refer to instantiated or dynamic
 objects here, not even parametric type instantiations. All relations refer to
 source locations literally. 
-%For the accuracy of source code metrics, it is
+For the accuracy of source code metrics, it is
 essential that \mthree\  separates what is written in the source code from
 what the code means dynamically. 
 For example, if an abstract method from an
@@ -359,7 +360,7 @@ chance of reuse and extending existing fact extractors. For example, if all
 statements are in the same sort, then a basic function computing the
 cyclomatic complexity can be extended to cover a new language by just adding
 cases for the new types of statements (e.g. a \texttt{foreach} statement). We
-also provide annotations types for specific nodes, i.e. all nodes have a
+also provide annotation types for specific nodes, i.e. all nodes have a
 \texttt{src} annotation to point to the physical source location, all
 declarations may have a \texttt{decl} annotation to their logical location
 identifier and all Expressions may have a \texttt{type} annotation (see
@@ -378,17 +379,17 @@ control flow information for use in the more advanced analyses.
 variables and expressions in a language may produce. For Java we have a
 default set of type symbols to represent (parameterized) class and interface
 types, method signatures, and primitive types. These symbols can be used to
-compute with raw and parametrized types, either instantiated or
+compute with raw and parameterized types, either instantiated or
 uninstantiated. An example of a type symbol is:
-\loc{class(|class:///java/util/List, [class(|class:///java/lang/String|,[])])}, 
+\loc{class(|class:///java/util/List|, [class(|class:///java/lang/String|,[])])}, 
 meaning the instantiated
-parametrized List type generated by the List class definition with its type
+parameterized List type generated by the List class definition with its type
 parameter instantiated by the String class. We extended the core \mthree\
 model with initial types---a relation from declarations to the types they
 generate---and we annotate the trees of expressions with the types they produce.
 Using type symbols we may compute with and reason about dynamic artifacts that
 are never declared yet may exist at run-time. For example, an upper-bound for
-the number of possible instantiations of a parametrized type can be computed
+the number of possible instantiations of a parameterized type can be computed
 based on such information.
 
 \subsection{Model composition} When we extract \mthree\  models we do this
@@ -418,17 +419,17 @@ declarations in another.
 \subsection{Efficiency and Memory Consumption}
 
 In essence a loaded \mthree model is an in-memory database of source code
-artifacts. For a big software system, the memory requirements are big and the
+artifacts. For a large software system, the memory requirements are large and the
 efficiency is limited by I/O bottlenecks (network access, disk access and
 cache misses). Our current implementation still suffers from these effects,
-which are aggravated by the immutability aspect.
+which are aggravated by value immutability.
 %
 Since \mthree and Rascal are implemented on the JVM we are using ``soft
 references'' to store \mthree models, such that we can re-compute caches which
 have been garbage collected. The fused \mthree model and AST models for
 specific files often drop out of memory because of this, releasing necessary
-space. Soft references mitigate memory limitations nicely at the cost of run-
-time efficiency.
+space. Soft references mitigate memory limitations nicely at the cost of
+runtime efficiency.
 %
 On the other hand we are investing in low level optimizations for in-memory
 hierarchical data-structures~\cite{BJKO00,gpce}. These results are hopeful,
@@ -447,7 +448,7 @@ operators such as infix \lstinline{o} (composition), infix \lstinline{+} (set
 union), infix \lstinline{-} (set difference) and postfix \lstinline{+}
 (transitive closure) are used to separate reachable from unreachable code.
 Comprehensions are used to generate and filter intermediate relations, and
-eventually a library function is called to compute the the result, a percentage with given
+eventually a library function is called to compute the overall result, a percentage with given
 precision.
 
 %This example is typical for an analysis based on the abstract relations in \mthree. We refer to Landman's analysis of cyclomatic complexity and lines of code~\cite{davy} for an AST-based code example.
@@ -464,7 +465,7 @@ real estimateCoverage(M3 m) {
   total = methods(m) - testMethods - ifaceMethods;
   return percentage(size(reachable), size(total), precision=0.01);       }
 \end{lstlisting}
-\vspace{-8mm}
+\vspace{-5mm}
 \end{figure}
 
 \section{Related Work}
@@ -485,7 +486,8 @@ fact extraction using the parser's semantic actions. A number of tools also
 exist with direct support for extracting facts from programs. Examples are
 the Rigi system~\cite{Mueller88}, which provides fixed fact extractors for
 several languages and represents facts as tuples in the Rigi Standard Format
-(RSF). Meta programming languages, such as Stratego~\cite{BKVV06}, TXL~\cite{TXL06} and ASF+SDF~\cite{BDHJJKKMOSVVV01} provide integrated parsing and tree processing support for source code fact extraction and manipulation in any programming language. SrcML~\cite{srcml} generates XML-annotated source code for the C language which can be queried directly using XML processors. Other more general, like JastAdd, Silver and Kiama, make use of attribute
+(RSF). Meta programming languages, such as Stratego~\cite{BKVV06}, TXL~\cite{TXL06} and ASF+SDF~\cite{BDHJJKKMOSVVV01} provide integrated parsing and tree processing support for source code fact extraction and manipulation in any programming language. SrcML~\cite{srcml} generates XML-annotated source code for the C language which can be queried directly using XML processors. 
+Frameworks like JastAdd, Silver and Kiama make use of attribute
 grammars~\cite{FNC2,Paakki95,EkmanHedin07,kiama,DBLP:journals/scp/WykBGK10},
 using synthesized attributes to specify facts and inherited attributes to
 propagate these facts through the parse tree.
@@ -511,19 +513,19 @@ defined using the Knowledge Discovery Metamodel~\cite{omg-kdm}, an OMG
 standard for modeling the structure and behavior of software systems. 
 Moose~\cite{DBLP:conf/sigsoft/NierstraszDG05,DBLP:journals/sigsoft/Nierstrasz12}
 extracts facts about software systems into models defined using the FAMIX~\cite{famix}
-family of metamodels. Finally, we recommend reading about source code query mechanism based on logic meta programming, such as Ekeko~\cite{ekeko} and SOUL~\cite{soul}.
+family of metamodels. Finally, we recommend reading about source code query mechanisms based on logic meta programming, such as Ekeko~\cite{ekeko} and SOUL~\cite{soul}.
 
 \section{Conclusion}
 
 We have shown you a taste of \mthree, an extensible and composable model for
 source code artifacts based on relations and trees, with immutable value
-semantics, source location literals and extensible with new types of binary relations. It has
-support for basic language independent analyses and we have a detailed model
+semantics, source location literals, and extensibility with new types of binary relations. It has
+support for basic language independent analyses, and we have a detailed model
 for Java and PHP. \mthree is designed for variability, integration and accuracy, all required for software analytics research with a source code component.
 
 %The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
 
-The key open challenges for \mthree application are efficiency and scalability which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain developed under the EPL license\footnote{\href{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}{https://github.com/cwi-swat/rascal}}.
+The key open challenges for \mthree applications are efficiency and scalability, which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain, developed under the EPL license.\!\footnote{\href{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}{https://github.com/cwi-swat/rascal}}
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
