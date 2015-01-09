@@ -206,10 +206,7 @@ Creating the same model out the three sources required writing three different
 fact extractors. The first is based on the Eclipse JDT, the second uses
 ASM,\!\footnote{\url{http://asm.ow2.org/}} and the last uses Rascal's HTML
 library model. The analysis reveals interesting differences between the models
-which may influence the conclusions of related work~\cite{apianalysis}. For
-example, it seems that Android jars are released containing many undocumented
-APIs which can be (and are) used by clients, and which are not even included
-in the source releases.
+which may influence the conclusions of related work~\cite{apianalysis}. For example, the Android source code releases contain undocumented public classes and methods. Nevertheless, these are available after deployment and developers use them. 
 
 \begin{figure}[t]
 	\resizebox{\columnwidth}{!}{\input{architecture}}
