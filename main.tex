@@ -336,7 +336,7 @@ For the accuracy of source code metrics, it is
 essential that \mthree\  separates what is written in the source code from
 what the code means dynamically. 
 For example, if an abstract method from an
-interface is called we should not infer immediately all the call sites and add
+interface is called we should not immediately infer all the call sites and add
 those to the invocations relation. Some metrics may want to count the fan-out
 to abstract methods, while other metrics want to know the impact on concrete
 implementations. You can compute such information by composing basic
@@ -400,7 +400,7 @@ models for different projects.
 Some analyses are best done before fusion. We compute the volume of a project
 before we fuse in the declarations of the jars we depend on. Other analyses
 are done only after fusing: depth of inheritance can only be computed if the
-models of classes we depend on our fully available. Since \mthree\  models are
+models of classes we depend on are fully available. Since \mthree\  models are
 immutable values, like all Rascal values, such models can never be accidentally
 mixed. The \texttt{compose} function is called
 explicitly by the programmer to union the relation between two \mthree\ models;
