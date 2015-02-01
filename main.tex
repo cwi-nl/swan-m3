@@ -96,7 +96,7 @@ columns=flexible,
 %%\pagestyle{plain}
 
 \newcommand{\loc}[1]{\small{\texttt{#1}}\xspace}
-\newcommand{\mthree}{\ensuremath{M^3}\xspace}
+\newcommand{\mthree}{\ensuremath{M^3}\!\xspace}
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric}
@@ -104,7 +104,7 @@ columns=flexible,
 
 \begin{document}
 
-\title{{\huge $M^3$: A General Model for Source Code Analytics in Rascal}}
+\title{$M^3$: a General Model for Code Analytics in Rascal}
 
 % author names and affiliations
 % use a multiple column layout for up to three different
@@ -120,6 +120,10 @@ Jurgen Vinju\IEEEauthorrefmark{2}}
 }
 
 \maketitle
+
+\begin{abstract}
+This short paper introduces M3, a simple and extensible model for capturing facts about source code for future analysis. M3 is a core part of the standard library of the Rascal meta programming language. We motivate it, position it to related work and detail the key design aspects.
+\end{abstract}
 
 \section{Motivation}
 
@@ -192,12 +196,12 @@ elements are the introduction of URI literals to identify source code
 artifacts in a language agnostic manner and support for fully structured type
 symbols.
 
-\section{Experience report}
+\section{Experience Report}
 
 We developed \mthree to satisfy the requirements of the OSSMETER project, but
 we have been using it for a broader range of studies related to software
 analytics.
-
+%
 We have used \mthree to construct comparable models of Android API evolution
 from three sources: source code, jar files and online
 documentation.\!\footnote{Thanks to the students of the UvA Software
@@ -209,7 +213,8 @@ library model. The analysis reveals interesting differences between the models
 which may influence the conclusions of related work~\cite{apianalysis}. For example, the Android source code releases contain undocumented public classes and methods. Nevertheless, these are available after deployment and developers use them. 
 
 \begin{figure}[t]
-	\resizebox{\columnwidth}{!}{\input{architecture}}
+\centering
+	\resizebox{.8\columnwidth}{!}{\input{architecture}}
 \caption{An Overview: From Code to Metrics and Visuals via \mthree Models.}
 \vspace{-5mm}
 \end{figure}
@@ -234,7 +239,7 @@ concurrency-related Java refactorings, and Java reverse engineering.
 
 \section{Design aspects}
 
-\subsection{Textual models}
+\subsection{Textual Models}
 
 \mthree is, like all Rascal data, fully typed and fully serializable as
 readable text with a standard notation that is equal to the expression syntax
@@ -296,13 +301,14 @@ locations. \mthree\ uses binary relations between locations; annotates AST nodes
 with these locations; and embeds these locations into symbolic facts (such
 as types) to link back to source code whenever possible.
 
-\subsection{Relations.} The \mthree\  model is both layered and compositional.
+\subsection{Relations} The \mthree\  model is both layered and compositional.
 This means that \mthree\ models can be combined (``linked'') and extended
 (``annotated''). The core relations are all between code locations (see
 Table~\ref{table:core}). An example containment tuple would be
 \loc{<|class:///foo/Bar|,|pkg:///foo|>}.
 
 \begin{table}[t]
+\caption{Core Binary relations of \mthree \label{table:core}}
 \begin{tabularx}{\columnwidth}{|l|l|X|}\hline
  Layer & \lstinline!rel[loc, loc]! & Description \\ \hline 
 \textbf{Generic} & \lstinline!containment! & logical containment of 
@@ -315,7 +321,6 @@ code entities \\
 & \lstinline!methodOverrides! & who overrides who (logical \lstinline!loc!) \\
 & \lstinline!fieldAccess! & who accesses who (logical \lstinline!loc!)\\ \hline
 \end{tabularx}
-\caption{Core Binary relations of \mthree \label{table:core}}
 \vspace{-5mm}
 \end{table}
 
@@ -344,7 +349,7 @@ facts---e.g. ``\lstinline!invocation o overrides!'' gives all the concrete calle
 for calls to abstract methods---and then compute a metric over the resulting
 relation.
 
-\subsection{Trees.} For abstract syntax trees we use a general concept of
+\subsection{Trees} For abstract syntax trees we use a general concept of
 algebraic data-types in Rascal. Every language comes with its own definitions.
 Algebraic data-types are easy to extend with new constructors (new programming
 language constructs). For \mthree\ we standardize some of the names used in
@@ -389,7 +394,7 @@ are never declared yet may exist at run-time. For example, an upper-bound for
 the number of possible instantiations of a parameterized type can be computed
 based on such information.
 
-\subsection{Model composition} When we extract \mthree\  models we do this
+\subsection{Model Composition} When we extract \mthree\  models we do this
 incrementally, i.e. per file, per project, per composition of a project with
 its dependencies. Each file (in a given programming language) produces one
 \mthree\  model. Then the models for all files in a project are fused into one
@@ -476,8 +481,9 @@ basic regular expression support provided by these tools and languages
 to include additional contextual information such that relations can be extracted once scanning is complete.
 
 Approaches based on grammars naturally handle the nested constructs common to
-programming languages, but, in contrast to lexical techniques, generally
-require the source code to be syntactically correct so it can be parsed.
+programming languages
+%, but, in contrast to lexical techniques, generally
+%require the source code to be syntactically correct so it can be parsed.
 Parsing tools such as Yacc and ANTLR provide basic support for hand-coded
 fact extraction using the parser's semantic actions. A number of tools also
 exist with direct support for extracting facts from programs. Examples are
@@ -492,7 +498,7 @@ propagate these facts through the parse tree.
 Relational approaches support extracting facts into relations which can then
 be combined and analyzed. Rigi relations are formed over RSF tuples and
 processed using operations in the Rigi Command Library (RCL).
-GROK~\cite{Holt96} and CrocoPat~\cite{BeyerEtAl03,beyer05efficient} (using a
+GROK~\cite{Holt96} and CrocoPat~\cite{BeyerEtAl03} (using a
 notation called RML) instead use relational algebra; GROK supports only binary
 relations, while CrocoPat supports n-ary relations. The \DeFacto
 system~\cite{DBLP:conf/sle/BastenK08}, using RScript~\cite{KlintRscript}, also
@@ -522,7 +528,7 @@ for Java and PHP. \mthree is designed for variability, integration and accuracy,
 
 %The ``heavy lifting'' is done in the front-ends, where parsing, name analysis (including a naming schemes for logical source code locations) and possibly type analysis have be to devised, and the ``harvesting'' is done in Rascal code which easily, combines, compares, measures, elaborates and visualizes the acquired \mthree models.
 
-The key open challenges for \mthree applications are efficiency and scalability, which we address using low level optimization techniques for hash-tries. Otherwise we are incrementally adding support for more programming languages. \mthree is in the public domain, developed under the EPL license.\!\footnote{\href{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}{https://github.com/cwi-swat/rascal}}
+The key open challenges for \mthree applications are efficiency and scalability, which we address using low level optimization techniques for hash-tries. Otherwise we are adding support for more programming languages. \mthree is open-source, EPL licensed.\!\footnote{\href{https://github.com/cwi-swat/rascal/tree/master/src/org/rascalmpl/library/analysis/m3}{https://github.com/cwi-swat/rascal}}
 
 \bibliographystyle{IEEEtran}
 \bibliography{cited}
